@@ -1,0 +1,274 @@
+@import "tailwindcss";
+
+@property --accent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #e2572b;
+}
+@property --accent-soft {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f6d5c4;
+}
+
+:root {
+  --paper: #f5f0e6;
+  --paper-alt: #ece5d6;
+  --ink: #1f1d1a;
+  --ink-muted: #5e5850;
+  --rule: #d6cdbb;
+  --orange: #e2572b;
+  --orange-soft: #f6d5c4;
+  --teal: #2f6f6a;
+  --teal-soft: #d3e4e1;
+  --accent: var(--orange);
+  --accent-soft: var(--orange-soft);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  color-scheme: light;
+  transition: --accent 400ms var(--ease-out), --accent-soft 400ms var(--ease-out);
+}
+[data-variant="data_science"] {
+  --accent: var(--teal);
+  --accent-soft: var(--teal-soft);
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-alt: var(--paper-alt);
+  --color-ink: var(--ink);
+  --color-muted: var(--ink-muted);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-orange: var(--orange);
+  --color-orange-soft: var(--orange-soft);
+  --color-teal: var(--teal);
+  --color-teal-soft: var(--teal-soft);
+  --font-display: var(--font-bricolage);
+  --font-serif: var(--font-instrument);
+  --font-sans: var(--font-inter-tight);
+  --font-mono: var(--font-jetbrains);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Paper grain */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.display {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+}
+.accent-serif {
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+}
+.mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Buttons: explicit resting colours so text is always visible */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 12px 18px;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  background: var(--ink);
+  color: var(--paper);
+  cursor: pointer;
+  transition: transform 180ms var(--ease-out), box-shadow 180ms var(--ease-out), background 150ms;
+}
+.btn-outline {
+  background: var(--paper);
+  color: var(--ink);
+}
+@media (hover: hover) {
+  .btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 3px 3px 0 var(--accent);
+  }
+}
+.btn:active {
+  transform: scale(0.97);
+  box-shadow: none;
+  transition-duration: 100ms;
+}
+
+/* Underline link */
+.ulink {
+  position: relative;
+  text-decoration: none;
+}
+.ulink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 1px;
+  width: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 220ms var(--ease-out);
+}
+@media (hover: hover) {
+  .ulink:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* Nav link text roll */
+.roll {
+  display: inline-block;
+  overflow: hidden;
+  height: 1.4em;
+  line-height: 1.4em;
+  vertical-align: top;
+}
+.roll > span {
+  display: block;
+  transition: transform 250ms var(--ease-out);
+}
+@media (hover: hover) {
+  a:hover > .roll > span {
+    transform: translateY(-100%);
+  }
+}
+
+/* Project cards */
+.card {
+  --c: var(--orange);
+  --cs: var(--orange-soft);
+  position: relative;
+  border: 1px solid var(--ink);
+  border-left: 4px solid var(--c);
+  background: var(--paper);
+  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out), border-left-width 200ms var(--ease-out);
+}
+.card[data-cat="data"] {
+  --c: var(--teal);
+  --cs: var(--teal-soft);
+}
+.card .arrow {
+  display: inline-block;
+  transition: transform 200ms var(--ease-out);
+}
+.card .tag {
+  transition: background-color 150ms;
+}
+@media (hover: hover) {
+  .card:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 4px 4px 0 var(--ink);
+    border-left-width: 8px;
+  }
+  .card:hover .arrow {
+    transform: translateX(4px);
+  }
+  .card:hover .tag {
+    background: var(--cs);
+  }
+}
+.card:active {
+  transform: translate(-2px, -2px) scale(0.995);
+}
+
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.4;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+
+/* Marquee */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Intro loader is shown only when the head script flags a first visit */
+.intro {
+  display: none;
+}
+html[data-intro] .intro {
+  display: flex;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 150ms !important;
+  }
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: auto;
+  }
+  .marquee-dup {
+    display: none;
+  }
+  .btn:hover,
+  .card:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,804 @@
+{
+  "$schema_note": "Build brief for an AI coding agent. Read 'build' first, then 'design' and 'motion', then render 'content' exactly as written. Do not invent metrics, employers, or links. Design: retro-modern paper style with extra-bold modern sans for emphasis.",
+  "build": {
+    "framework": "Next.js (App Router) + TypeScript",
+    "styling": "Tailwind CSS (design tokens as CSS variables in globals.css, mapped in tailwind config)",
+    "animation": "Motion (motion/react)",
+    "fonts": "next/font/google",
+    "content_source": "Copy 'content' from this file into /content/portfolio.ts as typed constants; components read from there, never hard-code copy.",
+    "pages": [
+      "/",
+      "/data-science"
+    ],
+    "section_order": [
+      "hero",
+      "about",
+      "software_development",
+      "data_science",
+      "experience",
+      "other",
+      "education",
+      "contact"
+    ],
+    "nav": {
+      "type": "sticky top bar, translucent paper background with backdrop blur after 24px scroll",
+      "links": [
+        "Software",
+        "Data Science",
+        "Experience",
+        "Other",
+        "Contact"
+      ],
+      "right_side": "Resume download button (PDF in /public/resume.pdf)"
+    },
+    "requirements": [
+      "Fully responsive; 16px side gutter on mobile, max content width 1120px",
+      "Light theme only",
+      "Lighthouse 95+ on performance and accessibility",
+      "Semantic HTML, visible focus rings, alt text, aria-labels on icon links",
+      "Respect prefers-reduced-motion everywhere",
+      "Copy assets/arjun-portrait.webp to /public; render with next/image, priority, sizes set",
+      "Data science content is academic and personal only; never present it as professional ML experience",
+      "Toggle and outline buttons must show readable ink text in their resting state, not only on hover (set explicit color/background; never rely on inherited button styles)"
+    ],
+    "variant_system": {
+      "how": "One shared layout and component set. Each route loads a variant object from 'variants' and merges it over 'content'. Only copy, ordering, emphasis and featured projects change; design and motion stay identical.",
+      "switcher": "Small mono-text toggle in the nav: FULL STACK / DATA SCIENCE. Shared layoutId underline slides between them.",
+      "seo": "Each route has its own <title>, meta description and Open Graph text from the variant.",
+      "resume_files": "Put the two PDFs in /public/resumes/ with the filenames given in each variant."
+    },
+    "hero_layout": {
+      "desktop": "Two columns: text left (eyebrow, extra-bold name, italic accent word, tagline, CTAs, stats), portrait right at ~40% width, top-aligned with the name. Mono caption under the photo: 'CORK, IE · OPEN TO WORK'.",
+      "mobile": "Portrait stacks above the name at 70% width, left-aligned."
+    }
+  },
+  "design": {
+    "direction": "Minimal retro-modern. Warm paper background, ink-black text, one punchy accent. Like a 70s technical manual reprinted today: generous whitespace, thin rules, monospace labels. Extra-bold modern sans gives it punch in key places.",
+    "palette": {
+      "paper": "#F5F0E6",
+      "paper_alt": "#ECE5D6",
+      "ink": "#1F1D1A",
+      "ink_muted": "#5E5850",
+      "rule": "#D6CDBB",
+      "accent": "#E2572B",
+      "accent_soft": "#F6D5C4",
+      "secondary": "#2F6F6A",
+      "secondary_soft": "#D3E4E1"
+    },
+    "category_colors": {
+      "software_development": "accent",
+      "data_science": "secondary",
+      "other": "ink_muted"
+    },
+    "typography": {
+      "display": {
+        "family": "Bricolage Grotesque",
+        "weights": [
+          800
+        ],
+        "use": "Hero name, section titles, stat numbers, footer name",
+        "notes": "Modern extra-bold grotesque with a slight retro character. Tight tracking (-0.035em), line-height 0.95."
+      },
+      "accent_serif": {
+        "family": "Instrument Serif",
+        "style": "italic",
+        "use": "At most one emphasis word per headline, in accent colour. Never for body or long text."
+      },
+      "body": {
+        "family": "Inter Tight",
+        "weights": [
+          400,
+          500
+        ],
+        "size": "17px / 1.6",
+        "use": "Paragraphs, bullets"
+      },
+      "card_titles": {
+        "family": "Bricolage Grotesque",
+        "weights": [
+          700
+        ]
+      },
+      "mono": {
+        "family": "JetBrains Mono",
+        "use": "Labels, tags, dates, nav, buttons",
+        "notes": "Uppercase, 12–13px, letter-spacing 0.08em"
+      },
+      "scale": {
+        "hero": "clamp(3.25rem, 9vw, 7rem)",
+        "h2": "clamp(2.25rem, 5vw, 4rem)",
+        "h3": "1.375rem",
+        "stat": "clamp(2.5rem, 5vw, 3.75rem)"
+      },
+      "extra_bold_where": [
+        "Hero name",
+        "Section titles",
+        "Stat numbers (150+, 10x, 3+)",
+        "Footer name"
+      ]
+    },
+    "retro_details": [
+      "Section numbers in mono: '01 / SOFTWARE DEVELOPMENT'",
+      "1px rules between sections and around cards (color: rule)",
+      "Very subtle paper grain overlay (SVG noise, 4% opacity, pointer-events none)",
+      "Tech tags as small pill outlines in mono",
+      "Hard offset shadow on hover instead of blur shadows: 4px 4px 0 ink"
+    ],
+    "avoid": [
+      "Dark mode",
+      "Gradients and glassmorphism cards",
+      "Generic purple/blue SaaS palette",
+      "Emoji icons",
+      "Stock illustrations",
+      "Serif for whole headlines (italic accent word only)"
+    ]
+  },
+  "motion": {
+    "principles": [
+      "Animate only transform and opacity",
+      "Ease-out for entering, ease-in-out for moving; never linear for UI",
+      "Hover: 150–220ms. Entrances: 400–600ms. Nothing over 700ms",
+      "Motion should explain or reward, not decorate; one hero moment, everything else quiet",
+      "prefers-reduced-motion: disable translate/scale, keep opacity fades at 150ms",
+      "Every animation must be skippable or finish under 1s after the first visit; nothing blocks reading or clicking"
+    ],
+    "easing": {
+      "out": "cubic-bezier(0.23, 1, 0.32, 1)",
+      "in_out": "cubic-bezier(0.77, 0, 0.175, 1)",
+      "spring": {
+        "type": "spring",
+        "stiffness": 400,
+        "damping": 30
+      }
+    },
+    "patterns": {
+      "hero_entrance": "Extra-bold name reveals word by word from below a mask (y 100% → 0 inside overflow-hidden lines), stagger 70ms; italic accent word arrives last with a 4° skew settling to 0.",
+      "section_reveal": "whileInView once, amount 0.2: y 16px → 0, opacity 0 → 1, 500ms, children stagger 50ms",
+      "project_card_hover": "Card translates (-4px, -4px) and gains hard shadow 4px 4px 0 ink; category colour strip on left widens 4px → 8px; arrow nudges 4px right. 200ms ease-out.",
+      "link_hover": "Underline draws left to right via scaleX 0 → 1 (origin left), 220ms; on leave retracts to the right.",
+      "tag_hover": "Fill with category soft colour, 150ms. No movement.",
+      "button_hover_press": "Hover: translate(-2px,-2px) + hard shadow 3px 3px 0 accent. Active: scale 0.97, shadow removed, 100ms.",
+      "nav_active_indicator": "Shared layoutId pill under the active section link, spring transition.",
+      "experience_timeline": "Vertical rule draws downward (scaleY) as the section scrolls into view; dot per role pops in with scale 0.6 → 1.",
+      "stat_counters": "Extra-bold numbers count up once on first view, 900ms ease-out.",
+      "cursor": "Do not replace the system cursor.",
+      "intro_loader": "First visit per session only: mono counter 000→100 in the corner (~900ms), then the paper panel slides up (translateY -100%, 600ms in_out) and the hero entrance starts. Skipped on reduced motion and on variant switches.",
+      "scroll_progress": "2px accent bar fixed at the very top, scaleX driven by useScroll + useSpring (stiffness 200, damping 40).",
+      "nav_link_roll": "Nav link text is duplicated in an overflow-hidden span; on hover the top copy slides up and the second slides in from below (translateY 0 → -100%), 250ms ease-out.",
+      "section_heading_rule": "Title rises from a mask, then a 1px ink rule draws across beneath it (scaleX 0 → 1, origin left, 700ms).",
+      "portrait": "Grayscale. On load: clip-path inset(100% 0 0 0) → inset(0) reveal from the bottom, 900ms in_out. On hover: image scales 1.00 → 1.03 inside its frame and an accent offset frame slides from (0,0) to (10px,10px) behind it, 300ms.",
+      "tech_marquee": "A single row of stack names in mono between hero and about, scrolling slowly (40s loop, CSS transform). Pauses on hover; each name turns accent on hover. Static wrapped list on reduced motion.",
+      "magnetic_cta": "Primary CTA buttons drift up to 6px toward the pointer while hovered (spring stiffness 300, damping 20), snap back on leave. Desktop pointer only.",
+      "project_card_tags": "On card hover the tech tags fill with the category soft colour in a left-to-right stagger of 30ms.",
+      "experience_expand": "Each role shows 2 bullets; a 'More' toggle expands the rest with AnimatePresence height auto + opacity, 300ms; the plus icon rotates 45° to an ×.",
+      "variant_switch": "Switching FULL STACK ↔ DATA SCIENCE: an accent/teal panel wipes across the screen (clip-path, 700ms total), the accent colour cross-fades, and sections re-run their stagger.",
+      "copy_email": "Clicking the email copies it; the copy icon morphs to a check (scale 0.6 → 1 + opacity), and a small mono 'COPIED' chip rises 8px and fades after 1.5s.",
+      "back_to_top": "Square ink button; appears after 1 viewport of scroll (scale 0.8 → 1 + opacity, 200ms); hover lifts with hard shadow.",
+      "footer_name": "Huge extra-bold name in the footer; each letter lifts 6px on hover (spring), neighbours lift 3px.",
+      "page_load_order": "Loader → nav fades in (200ms) → hero words → portrait reveal → stats count → marquee starts. Total under 2.2s on first visit, under 1s afterwards.",
+      "mono_label_scramble": "Section numbers and eyebrows scramble through random characters for ~400ms on first view and on hover, then settle. Fixed-width mono so layout never shifts."
+    }
+  },
+  "content": {
+    "identity": {
+      "name": "Arjun Krishna Krishnakumar",
+      "display_name": "Arjun Krishna",
+      "title": "Full Stack Developer",
+      "subtitle": "Angular · React · .NET · SQL Server · PostgreSQL",
+      "target_roles": [
+        "Full Stack Developer",
+        ".NET Developer",
+        "Angular / React Developer",
+        "Software Engineer (backend-leaning full stack)"
+      ],
+      "location": "Cork, Ireland",
+      "work_authorization": "Irish Stamp 1G (Graduate Permission), eligible for full-time employment",
+      "availability": "Open to full-time roles",
+      "email": "arjjunck@gmail.com",
+      "phone": "+353 892671026",
+      "links": {
+        "linkedin": "https://linkedin.com/in/arjjunck",
+        "github": "https://github.com/arjjunck"
+      },
+      "photo": {
+        "hero": {
+          "src": "/arjun-portrait.webp",
+          "source_file": "assets/arjun-portrait-tee.webp",
+          "alt": "Arjun Krishna, black and white portrait in a black t-shirt"
+        },
+        "alternate": {
+          "src": "/arjun-portrait-jacket.webp",
+          "source_file": "assets/arjun-portrait.webp",
+          "alt": "Arjun Krishna, black and white portrait in a black jacket",
+          "use": "Spare; not currently used"
+        },
+        "style": "Grayscale, 4:5 crop, 1px ink border, square corners; an accent offset frame slides in behind it on hover.",
+        "about": {
+          "src": "/arjun-mtu.jpg",
+          "source_file": "assets/arjun-mtu.jpg",
+          "alt": "Arjun Krishna standing outside the Munster Technological University building in Cork",
+          "caption": "MTU, Cork · MSc 2026",
+          "use": "About section. Grayscale at rest, fades to colour on hover."
+        }
+      }
+    },
+    "hero": {
+      "headline": "Three years shipping web apps for healthcare and logistics, from database to UI.",
+      "tagline": "Full stack developer working across Angular, React, ASP.NET Core and PostgreSQL, with an MSc in Data Science.",
+      "ctas": [
+        {
+          "label": "See my work",
+          "href": "#software"
+        },
+        {
+          "label": "Get in touch",
+          "href": "#contact"
+        }
+      ],
+      "stats": [
+        {
+          "value": "3+",
+          "label": "years in production"
+        },
+        {
+          "value": "150+",
+          "label": "hospitals served"
+        },
+        {
+          "value": "10x",
+          "label": "faster scheduling queries"
+        }
+      ]
+    },
+    "about": "I'm a full stack developer with three years of production experience in healthcare and logistics. I've built Angular and React front ends on ASP.NET Core microservices for a platform used by 150+ hospitals, where I cut scheduling queries from 10+ seconds to under 1. At Cydez I built shipment and warehouse APIs in C# and EF Core for Maersk, and set up CI/CD with GitHub Actions, Docker and Azure DevOps. I like owning a feature end to end: schema, API, UI and tests. I also hold a First Class Honours MSc in Data Science.",
+    "skills": {
+      "software_development": {
+        "Frontend": [
+          "Angular",
+          "React",
+          "TypeScript",
+          "JavaScript",
+          "RxJS",
+          "HTML5",
+          "CSS3",
+          "Tailwind CSS"
+        ],
+        "Backend": [
+          "C#",
+          "ASP.NET Core",
+          "ASP.NET MVC",
+          "Entity Framework Core",
+          "REST APIs",
+          "Microservices",
+          "Node.js",
+          "Express.js",
+          "FastAPI"
+        ],
+        "Databases": [
+          "SQL Server",
+          "PostgreSQL",
+          "MySQL",
+          "MongoDB"
+        ],
+        "Testing & Practices": [
+          "TDD",
+          "Unit Testing",
+          "Jasmine",
+          "Karma",
+          "SOLID",
+          "Clean Code",
+          "Code Review"
+        ],
+        "DevOps & Tools": [
+          "Docker",
+          "GitHub Actions",
+          "Azure DevOps",
+          "CI/CD",
+          "Git",
+          "Jira",
+          "Agile/Scrum"
+        ]
+      },
+      "data_science": {
+        "Machine Learning": [
+          "Python",
+          "scikit-learn",
+          "XGBoost",
+          "Random Forest",
+          "LSTM / Bi-LSTM",
+          "Autoencoders",
+          "PCA",
+          "SMOTE"
+        ],
+        "Methods": [
+          "Anomaly detection",
+          "Time-series forecasting",
+          "Statistical modelling",
+          "Feature selection"
+        ],
+        "NLP & AI": [
+          "TF-IDF",
+          "Text classification",
+          "LLM API integration",
+          "Document understanding",
+          "MCP servers"
+        ],
+        "Data Tools": [
+          "pandas",
+          "NumPy",
+          "Jupyter",
+          "Power BI",
+          "ETL pipelines"
+        ]
+      }
+    },
+    "projects": {
+      "software_development": [
+        {
+          "id": "medical-claims-ai",
+          "title": "Medical Claims AI Platform",
+          "type": "Main project · personal",
+          "featured": true,
+          "summary": "Full-stack platform that turns unstructured medical claim documents into structured, reviewable data.",
+          "highlights": [
+            "React front end, ASP.NET Core API and PostgreSQL, with a FastAPI service handling LLM-based document understanding",
+            "ETL pipeline that ingests and normalises claim documents into a structured schema, with row-level access controls and integrity checks before data reaches reports",
+            "Secure authentication, PDF processing, claim risk analysis, document-grounded RAG chat and real-time dashboards",
+            "Containerised with Docker, shipped through a CI/CD pipeline, and self-hosted"
+          ],
+          "stack": [
+            "React",
+            "ASP.NET Core",
+            "PostgreSQL",
+            "FastAPI",
+            "Docker",
+            "CI/CD"
+          ],
+          "links": {
+            "github": "https://github.com/arjjunck/med-claim-ai",
+            "live": "http://141.147.97.158"
+          }
+        },
+        {
+          "id": "mcp-analytics-server",
+          "title": "MCP Server for Analytics Tooling",
+          "type": "Personal project",
+          "featured": false,
+          "summary": "A Model Context Protocol server that lets AI coding agents query live analytics data.",
+          "highlights": [
+            "Exposes internal data endpoints to Claude Code so agent sessions can query results and generate dashboard code from live data"
+          ],
+          "stack": [
+            "Python",
+            "FastAPI",
+            "MCP",
+            "Claude Code"
+          ],
+          "links": {
+            "github": null,
+            "live": null
+          }
+        }
+      ],
+      "data_science": [
+        {
+          "id": "uav-battery-prediction",
+          "title": "UAV Battery Power Prediction",
+          "type": "MSc research thesis",
+          "featured": true,
+          "summary": "End-to-end ML pipeline predicting short-term drone energy use from real PX4 flight telemetry.",
+          "highlights": [
+            "Processed large-scale battery, voltage and power time series with correlation and mutual-information feature selection",
+            "Benchmarked PCA, Random Forest, XGBoost, LSTM, Bi-LSTM and Autoencoder models, and identified the best approach for anomaly scoring on flight sequences"
+          ],
+          "stack": [
+            "Python",
+            "scikit-learn",
+            "XGBoost",
+            "LSTM",
+            "PCA"
+          ],
+          "links": {
+            "github": null,
+            "paper": null
+          }
+        },
+        {
+          "id": "pill-defect-detection",
+          "title": "Pill Defect Detection",
+          "type": "Computer vision project",
+          "featured": true,
+          "summary": "AI quality inspection for pharmaceutical pills using an autoencoder trained on the MVTec AD dataset.",
+          "highlights": [
+            "PyTorch autoencoder flags defects by reconstruction error",
+            "Gradio interface with SQLite logging of inspections"
+          ],
+          "stack": [
+            "Python",
+            "PyTorch",
+            "Gradio",
+            "SQLite"
+          ],
+          "links": {
+            "github": "https://github.com/arjjunck/defect-detection-pill"
+          }
+        },
+        {
+          "id": "chest-xray-anomaly",
+          "title": "Chest X-ray Anomaly Detection",
+          "type": "Deep learning project",
+          "featured": false,
+          "summary": "Convolutional autoencoder for pneumonia anomaly detection, compared against a PCA reconstruction-error baseline.",
+          "highlights": [
+            "Kaggle pneumonia dataset",
+            "CNN autoencoder vs PCA baseline"
+          ],
+          "stack": [
+            "Python",
+            "Autoencoder",
+            "PCA"
+          ],
+          "links": {
+            "github": "https://github.com/arjjunck/chest-xray-anomaly-detection-autoencoder"
+          }
+        },
+        {
+          "id": "semiconductor-fault-detection",
+          "title": "Semiconductor Fault Detection",
+          "type": "ML project",
+          "featured": false,
+          "summary": "Fault classification on the highly imbalanced SECOM manufacturing dataset.",
+          "highlights": [
+            "PCA for dimensionality reduction and SMOTE for class imbalance",
+            "Benchmarked k-NN, Decision Tree and SVM classifiers"
+          ],
+          "stack": [
+            "Python",
+            "scikit-learn",
+            "SMOTE",
+            "PCA"
+          ],
+          "links": {
+            "github": "https://github.com/arjjunck/secom-semiconductor-fault-detection"
+          }
+        },
+        {
+          "id": "sarcasm-detection",
+          "title": "Sarcasm Detection",
+          "type": "NLP project",
+          "featured": false,
+          "summary": "Naive Bayes text classifier with TF-IDF features for detecting sarcasm in written text.",
+          "highlights": [
+            "End-to-end NLP workflow from preprocessing to evaluation"
+          ],
+          "stack": [
+            "Python",
+            "TF-IDF",
+            "Naive Bayes"
+          ],
+          "links": {
+            "github": "https://github.com/arjjunck/sarcasm-detection-naive-bayes"
+          }
+        },
+        {
+          "id": "pharmacy-bi-dashboard",
+          "title": "Pharmacy Sales BI Dashboard",
+          "type": "Analytics project",
+          "featured": false,
+          "summary": "Sales analytics on pharmacy transaction data: revenue trends, branch KPIs, GIS mapping and Sankey flows.",
+          "highlights": [
+            "Python data prep feeding Tableau dashboards"
+          ],
+          "stack": [
+            "Python",
+            "Tableau",
+            "pandas"
+          ],
+          "links": {
+            "github": "https://github.com/arjjunck/pharmacy-bi-dashboard-python-tableau"
+          }
+        },
+        {
+          "id": "tweet-sentiment-nb",
+          "title": "Tweet Sentiment Classifier",
+          "type": "NLP project",
+          "featured": false,
+          "summary": "Multinomial Naive Bayes written from scratch with Laplace smoothing.",
+          "highlights": [],
+          "stack": [
+            "Python",
+            "NLP"
+          ],
+          "links": {
+            "github": "https://github.com/arjjunck/Naive-Bayes-Tweet-Sentiment-Classifier"
+          }
+        },
+        {
+          "id": "pca-sensor-analyses",
+          "title": "Sensor Data PCA Studies",
+          "type": "Group of analyses",
+          "featured": false,
+          "summary": "Dimensionality reduction and clustering on three sensor datasets: human activity (smartphone), daily and sports activity (wearables), and gas sensor drift.",
+          "highlights": [
+            "PCA, LDA, K-Means and DBSCAN across real sensor data"
+          ],
+          "stack": [
+            "Python",
+            "scikit-learn",
+            "PCA",
+            "LDA",
+            "K-Means"
+          ],
+          "links": {
+            "github": [
+              "https://github.com/arjjunck/Human-Activity-Recognition-with-Smartphones",
+              "https://github.com/arjjunck/daily-sports-activity-pca-analysis",
+              "https://github.com/arjjunck/gas-sensor-drift-pca-analysis",
+              "https://github.com/arjjunck/manual-dbscan-clustering-analysis"
+            ]
+          }
+        }
+      ]
+    },
+    "experience": [
+      {
+        "role": "Full Stack Developer",
+        "company": "Cydez Technologies",
+        "location": "India · Hybrid",
+        "start": "2025-01",
+        "end": "2025-07",
+        "domain": "Logistics",
+        "highlights": [
+          "Built REST APIs for shipment creation, status tracking and warehouse inventory in ASP.NET Core and EF Core, within a microservices platform serving Maersk and other global shipping clients",
+          "Refactored LINQ and EF Core queries across delivery, warehouse and shipment modules to cut data-access latency on core reads",
+          "Shipped Angular features against backend microservices and reviewed code for junior developers in a 20-person Scrum team",
+          "Automated builds and deployments with GitHub Actions and Docker, and contributed to Azure DevOps pipeline configuration"
+        ],
+        "stack": [
+          "ASP.NET Core",
+          "C#",
+          "EF Core",
+          "Angular",
+          "SQL Server",
+          "Docker",
+          "GitHub Actions",
+          "Azure DevOps"
+        ]
+      },
+      {
+        "role": "Software Engineer",
+        "company": "Kameda Infologics",
+        "location": "India · Hybrid",
+        "start": "2022-10",
+        "end": "2024-09",
+        "domain": "Healthcare",
+        "highlights": [
+          "Developed ASP.NET Core microservices for patient management, scheduling and records on a platform used daily by 150+ hospitals across India and the Middle East",
+          "Optimised PostgreSQL queries in the scheduling module, cutting booking and rescheduling times from over 10 seconds to under 1 second at peak",
+          "Built front-end features in Angular, React and TypeScript, and analytics dashboards for clinical and admin teams",
+          "Wrote unit tests with Jasmine and Karma; grew from junior developer to mentoring new hires and running code reviews"
+        ],
+        "stack": [
+          "ASP.NET Core",
+          "C#",
+          "Angular",
+          "React",
+          "TypeScript",
+          "PostgreSQL",
+          "Jasmine",
+          "Karma"
+        ]
+      },
+      {
+        "role": "Software Engineer & Training Assistant",
+        "company": "Luminar Technolab",
+        "location": "India · On-site",
+        "start": "2021-11",
+        "end": "2022-10",
+        "domain": "Healthcare / Education",
+        "highlights": [
+          "Led 3 of 5 production releases on a 5-person team shipping Angular and REST API features for clinical workflow clients",
+          "Taught full stack development to batches of 60 students (HTML, CSS, JavaScript, TypeScript, Angular, React, Node.js)"
+        ],
+        "stack": [
+          "Angular",
+          "REST APIs",
+          "Node.js"
+        ]
+      }
+    ],
+    "other": {
+      "intro": "Things outside the day-to-day code that shaped how I work.",
+      "items": [
+        {
+          "title": "Teaching & mentoring",
+          "detail": "Trained batches of 60 students in full stack development at Luminar, and mentored incoming developers at Kameda Infologics."
+        },
+        {
+          "title": "Release leadership",
+          "detail": "Led 3 of 5 production releases for healthcare clients, coordinating testing and UI/UX."
+        },
+        {
+          "title": "Agile delivery",
+          "detail": "Sprint planning, code reviews and retrospectives across multiple Scrum teams, including a 20-person team at Cydez."
+        },
+        {
+          "title": "Engineering background",
+          "detail": "B.Tech in Mechanical Engineering, which is where the systems thinking started."
+        },
+        {
+          "title": "Data privacy",
+          "detail": "Built software under healthcare compliance requirements; familiar with GDPR."
+        },
+        {
+          "title": "Problem solving",
+          "detail": "Regular NeetCode practice, with submissions tracked on GitHub.",
+          "link": "https://github.com/arjjunck/neetcode-submissions"
+        }
+      ],
+      "certifications": [
+        {
+          "name": "Supervised Machine Learning: Regression and Classification",
+          "issuer": "Coursera / DeepLearning.AI",
+          "status": "completed"
+        },
+        {
+          "name": "MEARN Stack Web Development",
+          "issuer": "National Council for Technology and Training, India",
+          "status": "completed"
+        },
+        {
+          "name": "AWS Certified Machine Learning – Specialty",
+          "issuer": "AWS",
+          "status": "in progress, target Dec 2026"
+        }
+      ]
+    },
+    "education": [
+      {
+        "degree": "MSc in Data Science and Analytics",
+        "school": "Munster Technological University, Cork",
+        "start": "2025-09",
+        "end": "2026-09",
+        "result": "First Class Honours",
+        "modules": [
+          "Applied Machine Learning",
+          "Time Series Analysis",
+          "Data Mining & Statistical Modelling",
+          "Multivariate Modelling",
+          "Practical Data Management",
+          "Scientific Programming in Python"
+        ]
+      },
+      {
+        "degree": "B.Tech in Mechanical Engineering",
+        "school": "SCMS School of Engineering and Technology, India",
+        "start": "2017-01",
+        "end": "2021-01",
+        "result": "GPA 8.05 / 10"
+      }
+    ],
+    "contact": {
+      "headline": "Let's build something.",
+      "text": "I'm looking for full-time full stack roles in Ireland working with Angular or React, .NET and SQL. The fastest way to reach me is email.",
+      "primary_cta": {
+        "label": "arjjunck@gmail.com",
+        "href": "mailto:arjjunck@gmail.com"
+      },
+      "secondary": [
+        "linkedin",
+        "github",
+        "resume.pdf"
+      ]
+    }
+  },
+  "open_questions": [
+    "Export the two resume PDFs to /public/resumes/"
+  ],
+  "variants": {
+    "fullstack": {
+      "route": "/",
+      "source_resume": "Arjun_Krishna_Resume_DotNet.docx + Arjun_Krishna_Resume_Updated.docx",
+      "resume_pdf": "/resumes/arjun-krishna-fullstack.pdf",
+      "meta": {
+        "title": "Arjun Krishna, Full Stack Developer",
+        "description": "Full stack developer in Cork: Angular, React, ASP.NET Core, C#, SQL Server and PostgreSQL. Stamp 1G, available full-time."
+      },
+      "accent_key": "accent",
+      "hero": {
+        "eyebrow": "FULL STACK DEVELOPER · CORK",
+        "headline": "Three years shipping web apps for healthcare and logistics, from database to UI.",
+        "tagline": "Angular and React on the front, ASP.NET Core, C# and SQL Server / PostgreSQL behind it."
+      },
+      "about": "I'm a full stack developer with three years of production experience in healthcare and logistics. I've built Angular and React front ends on ASP.NET Core microservices for a platform used by 150+ hospitals, where I cut scheduling queries from 10+ seconds to under 1. At Cydez I built shipment and warehouse APIs in C# and EF Core for Maersk, and set up CI/CD with GitHub Actions, Docker and Azure DevOps. I like owning a feature end to end: schema, API, UI and tests. I also hold a First Class Honours MSc in Data Science.",
+      "section_order": [
+        "hero",
+        "about",
+        "software_development",
+        "experience",
+        "data_science",
+        "other",
+        "education",
+        "contact"
+      ],
+      "skills_order": [
+        "Frontend",
+        "Backend",
+        "Databases",
+        "Testing & Practices",
+        "DevOps & Tools"
+      ],
+      "featured_projects": [
+        "medical-claims-ai",
+        "mcp-analytics-server",
+        "pill-defect-detection"
+      ],
+      "data_science_section": "condensed: show 3 featured cards only, link 'see all' to /data-science",
+      "hero_badge": "Stamp 1G · eligible for full-time work",
+      "skills_highlight": [
+        "Angular",
+        "React",
+        "TypeScript",
+        "C#",
+        "ASP.NET Core",
+        "Entity Framework Core",
+        "SQL Server",
+        "PostgreSQL"
+      ]
+    },
+    "data_science": {
+      "route": "/data-science",
+      "source_resume": "Arjun_Krishna_Resume 1.docx",
+      "resume_pdf": "/resumes/arjun-krishna-data-science.pdf",
+      "meta": {
+        "title": "Arjun Krishna, Data Science (MSc)",
+        "description": "Software engineer with a First Class Honours MSc in Data Science. Academic and personal projects in anomaly detection, time series and NLP."
+      },
+      "accent_key": "secondary",
+      "hero": {
+        "eyebrow": "MSC DATA SCIENCE · FIRST CLASS HONOURS · CORK",
+        "headline": "A software engineer with a First Class MSc in Data Science.",
+        "tagline": "Three years building production software, plus academic and personal projects in anomaly detection, time series and NLP."
+      },
+      "about": "My professional experience is in full stack software engineering: three years building ASP.NET Core, Angular and React systems for healthcare and logistics. Alongside that I completed an MSc in Data Science and Analytics at MTU with First Class Honours. My thesis predicted drone battery use from real PX4 flight telemetry, and my main project, Medical Claims AI, is a self-hosted full-stack platform that uses LLMs to analyse medical claim documents. I'm looking for roles where I can bring both together, whether that's a full stack role on a data-heavy product or a junior data role where engineering skills matter.",
+      "section_order": [
+        "hero",
+        "about",
+        "data_science",
+        "education",
+        "software_development",
+        "experience",
+        "other",
+        "contact"
+      ],
+      "skills_order": [
+        "Machine Learning",
+        "Methods",
+        "NLP & AI",
+        "Data Tools"
+      ],
+      "featured_projects": [
+        "uav-battery-prediction",
+        "pill-defect-detection",
+        "chest-xray-anomaly",
+        "medical-claims-ai"
+      ],
+      "stats_override": [
+        {
+          "value": "First Class",
+          "label": "Honours, MSc Data Science"
+        },
+        {
+          "value": "10+",
+          "label": "data science projects on GitHub"
+        },
+        {
+          "value": "3+",
+          "label": "years as a software engineer"
+        }
+      ],
+      "experience_note": "Label the experience section 'Software engineering experience'. Do not describe any role as ML or data science work.",
+      "project_labels": "Tag every data science card as 'MSc thesis', 'Coursework' or 'Personal project'; never as professional work."
+    }
+  }
+}

@@ -214,11 +214,17 @@
         },
         "style": "Grayscale, 4:5 crop, 1px ink border, square corners; an accent offset frame slides in behind it on hover.",
         "about": {
+          "src": "/arjun-portrait-side.webp",
+          "source_file": "assets/arjun-portrait-side.webp",
+          "alt": "Arjun Krishna, black and white portrait looking to the side",
+          "caption": "Arjun Krishna · Cork, IE",
+          "use": "About section."
+        },
+        "spare_mtu": {
           "src": "/arjun-mtu.jpg",
           "source_file": "assets/arjun-mtu.jpg",
           "alt": "Arjun Krishna standing outside the Munster Technological University building in Cork",
-          "caption": "MTU, Cork · MSc 2026",
-          "use": "About section. Grayscale at rest, fades to colour on hover."
+          "use": "Spare; not currently used"
         }
       }
     },
@@ -760,7 +766,7 @@
         "headline": "A software engineer with a First Class MSc in Data Science.",
         "tagline": "Three years building production software, plus academic and personal projects in anomaly detection, time series and NLP."
       },
-      "about": "My professional experience is in full stack software engineering: three years building ASP.NET Core, Angular and React systems for healthcare and logistics. Alongside that I completed an MSc in Data Science and Analytics at MTU with First Class Honours. My thesis predicted drone battery use from real PX4 flight telemetry, and my main project, Medical Claims AI, is a self-hosted full-stack platform that uses LLMs to analyse medical claim documents. I'm looking for roles where I can bring both together, whether that's a full stack role on a data-heavy product or a junior data role where engineering skills matter.",
+      "about": "My professional experience is in full stack software engineering: three years building ASP.NET Core, Angular and React systems for healthcare and logistics. Alongside that I completed an MSc in Data Science and Analytics at MTU with First Class Honours. My thesis predicted drone battery use from real PX4 flight telemetry, and my main project, Medical Claims AI, is a self-hosted full-stack platform that uses LLMs to analyse medical claim documents. I'm looking for mid to senior roles where I can bring both together, whether that's full stack engineering on a data-heavy product or a data role where production engineering experience matters.",
       "section_order": [
         "hero",
         "about",

@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { sectionMeta, variants, type SectionKey, type VariantKey } from "@/content/portfolio";
+import { sectionMeta, variants, type SectionKey, type Variant, type VariantKey } from "@/content/portfolio";
 import About from "./About";
 import BackToTop from "./BackToTop";
 import Contact from "./Contact";
@@ -18,7 +18,13 @@ import Software from "./Software";
 export default function PortfolioPage({ variantKey }: { variantKey: VariantKey }) {
   const v = variants[variantKey];
   // Hide resume links until the PDF actually exists in /public.
-  const resume = fs.existsSync(path.join(process.cwd(), "public", v.resumePdf)) ? v.resumePdf : null;
+  const exists = (file: string) => fs.existsSync(path.join(process.cwd(), "public", file));
+  const resume = exists(v.resumePdf) ? v.resumePdf : null;
+  // Both versions, this page's first, for the About download block.
+  const resumes = (Object.values(variants) as Variant[])
+    .sort((a, b) => Number(b.key === v.key) - Number(a.key === v.key))
+    .filter((r) => exists(r.resumePdf))
+    .map((r) => ({ href: r.resumePdf, label: r.label }));
   const sections = v.sectionOrder.filter((s): s is Exclude<SectionKey, "hero"> => s !== "hero");
   const num = (s: Exclude<SectionKey, "hero">) => String(sections.indexOf(s) + 1).padStart(2, "0");
 
@@ -26,7 +32,7 @@ export default function PortfolioPage({ variantKey }: { variantKey: VariantKey }
     const props = { id: sectionMeta[s].id, number: num(s) };
     switch (s) {
       case "about":
-        return <About key={s} {...props} variant={v} />;
+        return <About key={s} {...props} variant={v} resumes={resumes} />;
       case "software_development":
         return <Software key={s} {...props} variant={v} />;
       case "data_science":

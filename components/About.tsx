@@ -3,7 +3,9 @@ import { identity, type Variant } from "@/content/portfolio";
 import { Reveal, RevealItem } from "./Reveal";
 import Section from "./Section";
 
-export default function About({ id, number, variant }: { id: string; number: string; variant: Variant }) {
+export type ResumeLink = { href: string; label: string };
+
+export default function About({ id, number, variant, resumes }: { id: string; number: string; variant: Variant; resumes: ResumeLink[] }) {
   const photo = identity.photo.about;
   return (
     <Section id={id} number={number} label="About" title="About me">
@@ -27,6 +29,23 @@ export default function About({ id, number, variant }: { id: string; number: str
               <dd>Stamp 1G · full-time</dd>
             </div>
           </dl>
+          {resumes.length > 0 && (
+            <div className="mt-10 border-t border-rule pt-8">
+              <h3 className="mono text-ink">Resume</h3>
+              <p className="mt-2 text-muted">
+                {resumes.length > 1 ? "Two versions as PDF. Pick the one that fits the role." : "Download as PDF."}
+              </p>
+              <ul className="mt-5 flex flex-wrap gap-3">
+                {resumes.map((r, i) => (
+                  <li key={r.href}>
+                    <a href={r.href} download className={`btn ${i === 0 ? "" : "btn-outline"}`}>
+                      {r.label} resume <span aria-hidden="true">↓</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </RevealItem>
         <RevealItem>
           <figure className="group w-[70%] max-w-[300px] md:w-full">

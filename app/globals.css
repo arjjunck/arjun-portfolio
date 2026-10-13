@@ -272,3 +272,42 @@ html[data-intro] .intro {
     transform: none;
   }
 }
+
+/* ID card flip */
+.idcard {
+  perspective: 1200px;
+}
+.idcard-inner {
+  transform-style: preserve-3d;
+  transition: transform 600ms var(--ease-in-out);
+}
+.idcard[data-flipped="true"] .idcard-inner {
+  transform: rotateY(180deg);
+}
+.idcard-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+.idcard-back {
+  transform: rotateY(180deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .idcard-inner,
+  .idcard[data-flipped="true"] .idcard-inner {
+    transform: none;
+  }
+  .idcard-face {
+    transition: opacity 150ms;
+  }
+  .idcard-back {
+    transform: none;
+    opacity: 0;
+  }
+  .idcard[data-flipped="true"] .idcard-back {
+    opacity: 1;
+  }
+  .idcard[data-flipped="true"] .idcard-face:not(.idcard-back) {
+    opacity: 0;
+  }
+}

@@ -176,7 +176,8 @@
       "back_to_top": "Square ink button; appears after 1 viewport of scroll (scale 0.8 → 1 + opacity, 200ms); hover lifts with hard shadow.",
       "footer_name": "Huge extra-bold name in the footer; each letter lifts 6px on hover (spring), neighbours lift 3px.",
       "page_load_order": "Loader → nav fades in (200ms) → hero words → portrait reveal → stats count → marquee starts. Total under 2.2s on first visit, under 1s afterwards.",
-      "mono_label_scramble": "Section numbers and eyebrows scramble through random characters for ~400ms on first view and on hover, then settle. Fixed-width mono so layout never shifts."
+      "mono_label_scramble": "Section numbers and eyebrows scramble through random characters for ~400ms on first view and on hover, then settle. Fixed-width mono so layout never shifts.",
+      "id_card_flip": "About section ID card on a lanyard. Hover (or tap / Enter on touch and keyboard) flips it on the Y axis, 600ms in_out, to show basic details on the back. Reduced motion: cross-fade instead of rotate."
     }
   },
   "content": {
@@ -218,13 +219,19 @@
           "source_file": "assets/arjun-portrait-side.webp",
           "alt": "Arjun Krishna, black and white portrait looking to the side",
           "caption": "Arjun Krishna · Cork, IE",
-          "use": "About section."
+          "use": "Spare; replaced by the ID card"
         },
         "spare_mtu": {
           "src": "/arjun-mtu.jpg",
           "source_file": "assets/arjun-mtu.jpg",
           "alt": "Arjun Krishna standing outside the Munster Technological University building in Cork",
           "use": "Spare; not currently used"
+        },
+        "id_card": {
+          "src": "/arjun-id.webp",
+          "source_file": "assets/arjun-id.webp",
+          "alt": "Arjun Krishna, black and white ID photo",
+          "use": "Front of the flipping ID card in the About section. Shown in black and white, whole face visible."
         }
       }
     },
@@ -372,16 +379,16 @@
           "featured": false,
           "summary": "A Model Context Protocol server that lets AI coding agents query live analytics data.",
           "highlights": [
-            "Exposes internal data endpoints to Claude Code so agent sessions can query results and generate dashboard code from live data"
+            "Exposes internal data endpoints to Cursor so agent sessions can query results and generate dashboard code from live data"
           ],
           "stack": [
             "Python",
             "FastAPI",
             "MCP",
-            "Claude Code"
+            "Cursor"
           ],
           "links": {
-            "github": null,
+            "github": "https://github.com/arjjunck/analytics-mcp-server",
             "live": null
           }
         }
@@ -405,7 +412,7 @@
             "PCA"
           ],
           "links": {
-            "github": null,
+            "github": "https://github.com/arjjunck/uav-thesis",
             "paper": null
           }
         },

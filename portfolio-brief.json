@@ -177,7 +177,7 @@
       "footer_name": "Huge extra-bold name in the footer; each letter lifts 6px on hover (spring), neighbours lift 3px.",
       "page_load_order": "Loader → nav fades in (200ms) → hero words → portrait reveal → stats count → marquee starts. Total under 2.2s on first visit, under 1s afterwards.",
       "mono_label_scramble": "Section numbers and eyebrows scramble through random characters for ~400ms on first view and on hover, then settle. Fixed-width mono so layout never shifts.",
-      "id_card_flip": "About section ID card on a lanyard. Hover (or tap / Enter on touch and keyboard) flips it on the Y axis, 600ms in_out, to show basic details on the back. Reduced motion: cross-fade instead of rotate."
+      "id_card_flip": "About section ID card. Hover (or tap / Enter on touch and keyboard) flips it on the Y axis, 600ms in_out, to show basic details on the back. Reduced motion: cross-fade instead of rotate."
     }
   },
   "content": {

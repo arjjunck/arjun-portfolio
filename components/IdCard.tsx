@@ -9,7 +9,7 @@ const roles: Record<Variant["key"], string> = {
   data_science: "Software Engineer · MSc Data Science",
 };
 
-// Lanyard ID card. Flips on hover with a mouse, on tap for touch, and on Enter/Space for keyboard.
+// ID card. Flips on hover with a mouse, on tap for touch, and on Enter/Space for keyboard.
 export default function IdCard({ variant }: { variant: Variant }) {
   const [flipped, setFlipped] = useState(false);
   const photo = identity.photo.id_card;
@@ -25,10 +25,6 @@ export default function IdCard({ variant }: { variant: Variant }) {
 
   return (
     <div className="mx-auto w-[82%] max-w-[300px] md:mx-0 md:w-full">
-      {/* Lanyard */}
-      <div aria-hidden="true" className="mx-auto h-14 w-5 border-x border-ink bg-accent" />
-      <div aria-hidden="true" className="mx-auto -mb-2 h-4 w-9 border border-ink bg-paper-alt" />
-
       <button
         type="button"
         aria-pressed={flipped}

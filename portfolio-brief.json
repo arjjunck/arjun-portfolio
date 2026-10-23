@@ -349,27 +349,28 @@
       "software_development": [
         {
           "id": "medical-claims-ai",
-          "title": "Medical Claims AI Platform",
+          "title": "MediClaim AI",
           "type": "Main project · personal",
           "featured": true,
-          "summary": "Full-stack platform that turns unstructured medical claim documents into structured, reviewable data.",
+          "summary": "AI medical document assistant and claim risk platform: ask questions about insurance policies and get answers grounded in the document, with page citations.",
           "highlights": [
-            "React front end, ASP.NET Core API and PostgreSQL, with a FastAPI service handling LLM-based document understanding",
-            "ETL pipeline that ingests and normalises claim documents into a structured schema, with row-level access controls and integrity checks before data reaches reports",
-            "Secure authentication, PDF processing, claim risk analysis, document-grounded RAG chat and real-time dashboards",
-            "Containerised with Docker, shipped through a CI/CD pipeline, and self-hosted"
+            "RAG pipeline: PDFs are extracted page by page, split into overlapping chunks tagged with their pages, embedded with NVIDIA Nemotron and stored in PostgreSQL",
+            "Questions are answered from the most similar chunks only (cosine similarity), with page-level source citations and stored chat history",
+            "CSV claim upload with a rule-based risk engine that flags high, medium and low risk claims, plus dashboards for documents and claims",
+            "React + TypeScript front end and ASP.NET Core (.NET 10) API with JWT auth, containerised with Docker and deployed on Azure Container Apps behind an nginx proxy"
           ],
           "stack": [
             "React",
+            "TypeScript",
             "ASP.NET Core",
             "PostgreSQL",
-            "FastAPI",
+            "NVIDIA NIM",
             "Docker",
-            "CI/CD"
+            "Azure"
           ],
           "links": {
             "github": "https://github.com/arjjunck/med-claim-ai",
-            "live": "http://141.147.97.158"
+            "live": "https://mediclaim-web.thankfulflower-e7d8ef35.switzerlandnorth.azurecontainerapps.io"
           }
         },
         {
@@ -773,7 +774,7 @@
         "headline": "A software engineer with a First Class MSc in Data Science.",
         "tagline": "Three years building production software, plus academic and personal projects in anomaly detection, time series and NLP."
       },
-      "about": "My professional experience is in full stack software engineering: three years building ASP.NET Core, Angular and React systems for healthcare and logistics. Alongside that I completed an MSc in Data Science and Analytics at MTU with First Class Honours. My thesis predicted drone battery use from real PX4 flight telemetry, and my main project, Medical Claims AI, is a self-hosted full-stack platform that uses LLMs to analyse medical claim documents. I'm looking for mid to senior roles where I can bring both together, whether that's full stack engineering on a data-heavy product or a data role where production engineering experience matters.",
+      "about": "My professional experience is in full stack software engineering: three years building ASP.NET Core, Angular and React systems for healthcare and logistics. Alongside that I completed an MSc in Data Science and Analytics at MTU with First Class Honours. My thesis predicted drone battery use from real PX4 flight telemetry, and my main project, MediClaim AI, is a full-stack RAG platform deployed on Azure that answers questions about insurance documents with page citations and flags risky claims. I'm looking for mid to senior roles where I can bring both together, whether that's full stack engineering on a data-heavy product or a data role where production engineering experience matters.",
       "section_order": [
         "hero",
         "about",

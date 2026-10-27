@@ -236,7 +236,7 @@
       }
     },
     "hero": {
-      "headline": "Three years shipping web apps for healthcare and logistics, from database to UI.",
+      "headline": "Full-stack developer building web apps for healthcare and logistics.",
       "tagline": "Full stack developer working across Angular, React, ASP.NET Core and PostgreSQL, with an MSc in Data Science.",
       "ctas": [
         {
@@ -263,7 +263,7 @@
         }
       ]
     },
-    "about": "I'm a full stack developer with three years of production experience in healthcare and logistics. I've built Angular and React front ends on ASP.NET Core microservices for a platform used by 150+ hospitals, where I cut scheduling queries from 10+ seconds to under 1. At Cydez I built shipment and warehouse APIs in C# and EF Core for Maersk, and set up CI/CD with GitHub Actions, Docker and Azure DevOps. I like owning a feature end to end: schema, API, UI and tests. I also hold a First Class Honours MSc in Data Science.",
+    "about": "I'm a full stack developer with three years of experience building web applications that people use every day. My work has mostly been in healthcare and logistics, across Angular and React front ends, .NET back ends and SQL databases. I enjoy the whole journey of a feature, from the data model to the screen, and I'm happiest when I'm digging into a hard problem until it's properly fixed. I also have an MSc in Data Science.",
     "skills": {
       "software_development": {
         "Frontend": [
@@ -721,10 +721,10 @@
       "accent_key": "accent",
       "hero": {
         "eyebrow": "FULL STACK DEVELOPER · CORK",
-        "headline": "Three years shipping web apps for healthcare and logistics, from database to UI.",
+        "headline": "Full-stack developer building web apps for healthcare and logistics.",
         "tagline": "Angular and React on the front, ASP.NET Core, C# and SQL Server / PostgreSQL behind it."
       },
-      "about": "I'm a full stack developer with three years of production experience in healthcare and logistics. I've built Angular and React front ends on ASP.NET Core microservices for a platform used by 150+ hospitals, where I cut scheduling queries from 10+ seconds to under 1. At Cydez I built shipment and warehouse APIs in C# and EF Core for Maersk, and set up CI/CD with GitHub Actions, Docker and Azure DevOps. I like owning a feature end to end: schema, API, UI and tests. I also hold a First Class Honours MSc in Data Science.",
+      "about": "I'm a full stack developer with three years of experience building web applications that people use every day. My work has mostly been in healthcare and logistics, across Angular and React front ends, .NET back ends and SQL databases. I enjoy the whole journey of a feature, from the data model to the screen, and I'm happiest when I'm digging into a hard problem until it's properly fixed. I also have an MSc in Data Science.",
       "section_order": [
         "hero",
         "about",

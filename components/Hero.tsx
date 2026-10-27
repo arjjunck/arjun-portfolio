@@ -1,11 +1,11 @@
 "use client";
 
 import { animate, motion, useInView, useMotionValue, useSpring } from "motion/react";
-import Image from "next/image";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { identity, type Stat, type Variant } from "@/content/portfolio";
-import { easeInOut, easeOut } from "@/lib/motion";
+import { type Stat, type Variant } from "@/content/portfolio";
+import { easeOut } from "@/lib/motion";
 import { useScramble } from "@/lib/useScramble";
+import JourneyScene from "./JourneyScene";
 import { useIntroDone } from "./Providers";
 
 export default function Hero({ variant }: { variant: Variant }) {
@@ -82,43 +82,11 @@ export default function Hero({ variant }: { variant: Variant }) {
           </motion.div>
         </div>
 
-        <Portrait ready={ready} />
+        <JourneyScene ready={ready} />
       </div>
 
       <Stats stats={variant.stats} ready={ready} />
     </section>
-  );
-}
-
-function Portrait({ ready }: { ready: boolean }) {
-  const { hero } = identity.photo;
-  return (
-    <div className="order-first w-[70%] max-w-[420px] md:order-none md:w-full md:justify-self-end">
-      <div className="group relative">
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-accent transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-[10px] group-hover:translate-y-[10px]"
-        />
-        <motion.div
-          initial={{ clipPath: "inset(100% 0 0 0)" }}
-          animate={ready ? { clipPath: "inset(0% 0 0 0)" } : undefined}
-          transition={{ duration: 0.9, ease: easeInOut, delay: 0.2 }}
-          className="relative aspect-[4/5] overflow-hidden border border-ink bg-paper-alt transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-x-0.5 group-hover:-translate-y-0.5"
-        >
-          <Image
-            src={hero.src}
-            alt={hero.alt}
-            fill
-            priority
-            sizes="(min-width: 768px) 420px, 70vw"
-            className="object-cover grayscale transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03]"
-          />
-        </motion.div>
-      </div>
-      <p className="mono mt-4 text-muted">
-        Cork, IE · <span className="text-accent" aria-hidden="true">●</span> Open to work
-      </p>
-    </div>
   );
 }
 

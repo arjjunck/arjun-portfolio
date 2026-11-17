@@ -8,6 +8,7 @@ import Experience from "./Experience";
 import Feed from "./Feed";
 import Footer from "./Footer";
 import Hero from "./Hero";
+import Marquee from "./Marquee";
 import Nav from "./Nav";
 import Projects from "./Projects";
 import Skills from "./Skills";
@@ -45,6 +46,7 @@ export default function PortfolioPage() {
       <Nav cv={cv} />
       <main>
         <Hero cv={cv} />
+        <Marquee />
         {sectionOrder.map(render)}
       </main>
       <Footer />

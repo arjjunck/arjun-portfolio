@@ -5,7 +5,7 @@ export default function Marquee() {
   const row = (dup: boolean) => (
     <ul className={`flex shrink-0 ${dup ? "marquee-dup" : ""}`} aria-hidden={dup || undefined}>
       {marquee.map((m) => (
-        <li key={m} className="px-5 py-3 font-mono text-[12px] uppercase tracking-[0.08em] text-ink transition-colors duration-150 hover:text-cta">
+        <li key={m} className="px-5 py-3 font-mono text-[12px] uppercase tracking-[0.08em] text-ink transition-colors duration-150 hover:text-[#e8341c]">
           {m}
         </li>
       ))}

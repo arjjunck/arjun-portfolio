@@ -285,7 +285,7 @@ export default function JourneyScene({ ready }: { ready: boolean }) {
   const dinoX = { loading: 112, mech: 24, code: 16, data: 8 }[scene];
 
   return (
-    <div ref={ref} className="mx-auto w-full max-w-[420px]">
+    <div ref={ref} className="mx-auto w-full max-w-[420px]" style={{ ["--accent" as string]: "#e8341c" }}>
       <motion.div
         initial={{ clipPath: "inset(100% 0 0 0)" }}
         animate={ready ? { clipPath: "inset(0% 0 0 0)" } : undefined}

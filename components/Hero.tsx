@@ -1,170 +1,116 @@
-"use client";
+import Image from "next/image";
+import { contact, hero, identity } from "@/content/portfolio";
+import CvMenu from "./CvMenu";
+import CountUp from "./fx/CountUp";
+import Parallax from "./fx/Parallax";
+import PhotoReveal from "./fx/PhotoReveal";
+import { Reveal, RevealGroup, RevealItem, RevealText } from "./fx/Reveal";
 
-import { animate, motion, useInView, useMotionValue, useSpring } from "motion/react";
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { type Stat, type Variant } from "@/content/portfolio";
-import { easeOut } from "@/lib/motion";
-import { useScramble } from "@/lib/useScramble";
-import JourneyScene from "./JourneyScene";
-import { useIntroDone } from "./Providers";
-
-export default function Hero({ variant }: { variant: Variant }) {
-  const ready = useIntroDone();
-  const eyebrow = useScramble(variant.hero.eyebrow);
-  const { run } = eyebrow;
-
-  useEffect(() => {
-    if (ready) run();
-  }, [ready, run]);
-
-  const lines: ReactNode[] = [
-    "Arjun",
-    "Krishna",
-    <span key="accent" className="accent-serif inline-block pr-2 text-[0.92em]">
-      {variant.hero.accentWord}
-    </span>,
+export default function Hero({ cv }: { cv: string }) {
+  const photo = identity.photo.about; // side portrait, crops well into a wide panel
+  const stats = [
+    { value: "3+", label: "years of commercial software engineering" },
+    { value: "200+", label: "hospital sites running clinical systems I built and supported" },
+    { value: "20", label: "person Agile team I ran CI/CD for, releasing twice a week" },
   ];
 
-  const fade = (delay: number) => ({
-    initial: { opacity: 0, y: 16 },
-    animate: ready ? { opacity: 1, y: 0 } : undefined,
-    transition: { duration: 0.5, ease: easeOut, delay },
-  });
-
   return (
-    <section id="top" aria-label="Introduction" className="mx-auto max-w-[1120px] px-4 pb-14 pt-10 sm:px-6 sm:pt-16">
-      <div className="grid items-start gap-10 md:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] md:gap-14">
+    <section id="top" aria-label="Introduction" className="mx-auto max-w-[1240px] px-4 pb-10 pt-12 sm:px-6 sm:pt-16">
+      <p className="code text-com" aria-hidden="true">
+        <span className="k">public class</span> <span className="t">SoftwareEngineer</span> {"{ "}Console.<span className="t">WriteLine</span>(<span className="s">&quot;Hello, Ireland!&quot;</span>); {"}"}
+      </p>
+
+      <div className="mt-4 grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,21rem)] lg:items-end">
         <div>
-          <p className="mono mb-5 text-muted" onMouseEnter={run} aria-label={variant.hero.eyebrow}>
-            <span aria-hidden="true">{eyebrow.output}</span>
-          </p>
-
-          <h1 className="display text-[clamp(3.25rem,9vw,7rem)]">
-            {lines.map((line, i) => (
-              <span key={i} className="block overflow-hidden pb-[0.06em]">
-                <motion.span
-                  className="inline-block"
-                  initial={{ y: "105%", skewX: i === 2 ? -4 : 0 }}
-                  animate={ready ? { y: "0%", skewX: 0 } : undefined}
-                  transition={{ duration: 0.75, ease: easeOut, delay: 0.07 * i + (i === 2 ? 0.08 : 0) }}
-                >
-                  {line}
-                </motion.span>
-              </span>
-            ))}
+          <h1 className="display text-[clamp(1.85rem,8.4vw,5.25rem)]" aria-label="Arjun Krishna Krishnakumar">
+            <RevealText text="Arjun Krishna" onLoad className="block" />
+            <span className="block whitespace-nowrap">
+              <RevealText text="Krishnakumar" onLoad delay={0.15} />
+            </span>
           </h1>
-
-          <motion.p {...fade(0.3)} className="mt-6 max-w-xl text-xl font-medium leading-snug sm:text-2xl">
-            {variant.hero.headline}
-          </motion.p>
-          <motion.p {...fade(0.36)} className="mt-3 max-w-xl text-muted">
-            {variant.hero.tagline}
-          </motion.p>
-
-          {variant.heroBadge && (
-            <motion.p {...fade(0.4)} className="mono mt-5 inline-flex items-center gap-2 border border-rule px-3 py-1.5 text-ink">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
-              {variant.heroBadge}
-            </motion.p>
-          )}
-
-          <motion.div {...fade(0.44)} className="mt-7 flex flex-wrap gap-3">
-            <Magnetic>
-              <a href={variant.key === "data_science" ? "#data-science" : "#software"} className="btn">
-                See my work <span aria-hidden="true">→</span>
-              </a>
-            </Magnetic>
-            <Magnetic>
-              <a href="#contact" className="btn btn-outline">
-                Get in touch
-              </a>
-            </Magnetic>
-          </motion.div>
+          <Reveal delay={0.35}>
+          <p className="heading mt-5 text-[clamp(1.3rem,2.4vw,1.75rem)]">
+            {identity.title}, <span className="tbox">C# / .NET</span>, Angular, PostgreSQL, Python
+          </p>
+          </Reveal>
         </div>
-
-        <JourneyScene ready={ready} />
+        <Reveal delay={0.5} className="relative z-20">
+          <p className="text-[18px] leading-snug">{hero.subline}</p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <CvMenu />
+            <a href={contact.primary_cta.href} className="btn btn-outline">
+              Email me
+            </a>
+          </div>
+          <p className="mt-4 flex gap-5 text-[15px] font-semibold">
+            <a href={identity.links.linkedin} target="_blank" rel="noreferrer" className="ulink">
+              LinkedIn
+            </a>
+            <a href={identity.links.github} target="_blank" rel="noreferrer" className="ulink">
+              GitHub
+            </a>
+          </p>
+        </Reveal>
       </div>
 
-      <Stats stats={variant.stats} ready={ready} />
+      <Reveal delay={0.25}>
+      <div className="panel mt-10 grid grid-cols-[minmax(0,1fr)] overflow-hidden sm:grid-cols-[minmax(0,1fr)_minmax(0,16rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
+        <div className="flex flex-col justify-between gap-8 bg-panel-2 p-6 sm:p-10">
+          <p className="float-card flex w-fit items-center gap-2 px-4 py-2.5 text-[14px] font-semibold">
+            <span className="h-2.5 w-2.5 rounded-full bg-live" aria-hidden="true" />
+            Open to roles in Ireland
+          </p>
+          <Reveal delay={0.9} className="float-card p-5 sm:p-7">
+            <p className="label mb-3">SoftwareEngineer.cs</p>
+            <p className="code text-[14px] sm:text-[15px]">
+              <span className="k">public record</span> <span className="t">Arjun</span>({"\n"}
+              {"    "}<span className="k">string</span> Location = <span className="s">&quot;Cork, Ireland&quot;</span>,{"\n"}
+              {"    "}<span className="k">string</span> Visa = <span className="s">&quot;Stamp 1G&quot;</span>,{"\n"}
+              {"    "}<span className="k">string</span> Permit = <span className="s">&quot;Critical Skills&quot;</span>,{"\n"}
+              {"    "}<span className="k">int</span> YearsCommercial = <span className="n">3</span>,{"\n"}
+              {"    "}<span className="k">string</span>[] Stack = [{"\n"}
+              {hero.stack_rows.map((row, r) => (
+                <span key={r}>
+                  {"        "}
+                  {row.map((t, i) => (
+                    <span key={t}>
+                      <span className="s">&quot;{t}&quot;</span>
+                      {r < hero.stack_rows.length - 1 || i < row.length - 1 ? ", " : ""}
+                    </span>
+                  ))}
+                  {"\n"}
+                </span>
+              ))}
+              {"    "}]{"\n"}
+              );
+            </p>
+          </Reveal>
+        </div>
+        <div className="relative mx-auto aspect-[4/5] w-full max-w-[22rem] bg-[#dde1e6] sm:mx-0 sm:aspect-auto sm:h-full sm:min-h-[380px] sm:max-w-none">
+          <PhotoReveal onLoad className="absolute inset-0 overflow-hidden">
+            <Parallax distance={40}>
+              <Image src={photo.src} alt={photo.alt} fill priority sizes="(min-width: 1024px) 540px, 100vw" className="object-cover object-[50%_20%] grayscale" />
+            </Parallax>
+          </PhotoReveal>
+        </div>
+      </div>
+
+      </Reveal>
+
+      <RevealGroup as="ul" className="mt-4 grid grid-cols-[minmax(0,1fr)] gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {stats.map((s) => (
+          <RevealItem as="li" key={s.value} className="panel lift p-6">
+            <p className="display text-[56px] leading-none">
+              <CountUp value={s.value} />
+            </p>
+            <p className="mt-3 text-[15px] text-muted">{s.label}</p>
+          </RevealItem>
+        ))}
+        <RevealItem as="li" className="lift flex flex-col justify-between rounded-[24px] bg-ink p-6 text-white">
+          <p className="label text-[#9aa3ad]">Work permit</p>
+          <p className="heading mt-3 text-[22px]">{identity.work_authorization}</p>
+        </RevealItem>
+      </RevealGroup>
     </section>
-  );
-}
-
-function Stats({ stats, ready }: { stats: Stat[]; ready: boolean }) {
-  return (
-    <dl className="mt-14 grid grid-cols-1 gap-6 border-t border-rule pt-8 sm:grid-cols-3">
-      {stats.map((s, i) => (
-        <motion.div
-          key={s.label}
-          initial={{ opacity: 0, y: 16 }}
-          animate={ready ? { opacity: 1, y: 0 } : undefined}
-          transition={{ duration: 0.5, ease: easeOut, delay: 0.5 + i * 0.06 }}
-          className="flex flex-col-reverse gap-2"
-        >
-          <dt className="mono text-muted">{s.label}</dt>
-          <dd className="display text-[clamp(2.5rem,5vw,3.75rem)]">
-            <CountUp value={s.value} start={ready} />
-          </dd>
-        </motion.div>
-      ))}
-    </dl>
-  );
-}
-
-function CountUp({ value, start }: { value: string; start: boolean }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
-  const match = value.match(/^(\d+)(.*)$/);
-  const [shown, setShown] = useState(match ? `0${match[2]}` : value);
-
-  useEffect(() => {
-    if (!match || !start || !inView) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setShown(value);
-      return;
-    }
-    const target = Number(match[1]);
-    const c = animate(0, target, {
-      duration: 0.9,
-      ease: "easeOut",
-      onUpdate: (v) => setShown(`${Math.round(v)}${match[2]}`),
-    });
-    return () => c.stop();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [start, inView, value]);
-
-  return (
-    <span ref={ref} aria-label={value} className="tabular-nums">
-      <span aria-hidden="true">{shown}</span>
-    </span>
-  );
-}
-
-// Drifts up to 6px toward the pointer; fine pointers only.
-function Magnetic({ children }: { children: ReactNode }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 300, damping: 20 });
-  const sy = useSpring(y, { stiffness: 300, damping: 20 });
-
-  return (
-    <motion.span
-      className="inline-block"
-      style={{ x: sx, y: sy }}
-      onPointerMove={(e) => {
-        if (e.pointerType !== "mouse" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-        const r = e.currentTarget.getBoundingClientRect();
-        const dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
-        const dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
-        x.set(dx * 6);
-        y.set(dy * 6);
-      }}
-      onPointerLeave={() => {
-        x.set(0);
-        y.set(0);
-      }}
-    >
-      {children}
-    </motion.span>
   );
 }

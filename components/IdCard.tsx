@@ -2,24 +2,21 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { education, identity, type Variant } from "@/content/portfolio";
+import { identity } from "@/content/portfolio";
 
-const roles: Record<Variant["key"], string> = {
-  fullstack: "Full Stack Developer",
-  data_science: "Software Engineer · MSc Data Science",
-};
+const ROLE = "Software engineer, C# and .NET";
 
 // ID card. Flips on hover with a mouse, on tap for touch, and on Enter/Space for keyboard.
-export default function IdCard({ variant }: { variant: Variant }) {
+export default function IdCard() {
   const [flipped, setFlipped] = useState(false);
   const photo = identity.photo.id_card;
   const details: [string, string][] = [
     ["Name", identity.name],
-    ["Role", roles[variant.key]],
-    ["Based in", identity.location],
-    ["Work rights", "Stamp 1G · full-time"],
-    ["Experience", "3+ years, healthcare and logistics"],
-    ["Education", `${education[0].degree}, ${education[0].result}`],
+    ["Role", ROLE],
+    ["Based in", identity.location_detail],
+    ["Work rights", identity.work_authorization],
+    ["Experience", "3+ years, regulated healthcare and logistics"],
+    ["Education", "MSc Data Science, First Class Honours"],
     ["Email", identity.email],
   ];
 
@@ -43,10 +40,8 @@ export default function IdCard({ variant }: { variant: Variant }) {
           {/* Front */}
           <span className="idcard-face absolute inset-0 flex flex-col border border-ink bg-paper" aria-hidden={flipped}>
             <span className="flex items-center justify-between border-b border-ink bg-ink px-4 py-2.5 text-paper">
-              <span className="display text-lg">
-                AK<span className="text-accent">.</span>
-              </span>
-              <span className="mono text-[10px]">ID · 2026</span>
+              <span className="display text-lg">AK</span>
+              <span className="label text-[10px] text-paper-alt">ID, 2026</span>
             </span>
             <span className="mx-4 mt-4 flex min-h-0 flex-1 justify-center">
               <span className="relative block aspect-[3/4] h-full overflow-hidden border border-ink bg-paper-alt">
@@ -55,10 +50,10 @@ export default function IdCard({ variant }: { variant: Variant }) {
             </span>
             <span className="block px-4 pb-4 pt-3">
               <span className="display block text-2xl">{identity.display_name}</span>
-              <span className="mono mt-1.5 block text-[10px] text-muted">{roles[variant.key]}</span>
+              <span className="label mt-1.5 block text-[10px] text-muted">{ROLE}</span>
               <span className="mt-3 flex items-end justify-between">
                 <Barcode />
-                <span className="mono text-[10px] text-accent">Flip ↻</span>
+                <span className="label text-[10px] text-accent">Details on the back</span>
               </span>
             </span>
           </span>
@@ -66,15 +61,15 @@ export default function IdCard({ variant }: { variant: Variant }) {
           {/* Back */}
           <span className="idcard-face idcard-back absolute inset-0 flex flex-col border border-ink bg-paper-alt" aria-hidden={!flipped}>
             <span className="flex items-center justify-between border-b border-ink bg-accent px-4 py-2.5 text-paper">
-              <span className="mono text-[10px]">Basic details</span>
-              <span className="mono flex items-center gap-1.5 text-[10px]">
+              <span className="label text-[10px] text-paper-alt">Basic details</span>
+              <span className="label flex items-center gap-1.5 text-[10px] text-paper-alt">
                 <span className="h-1.5 w-1.5 rounded-full bg-paper" /> Open to work
               </span>
             </span>
             <span className="flex flex-1 flex-col justify-between px-4 py-3">
               {details.map(([k, v]) => (
                 <span key={k} className="block border-b border-rule pb-1.5 last:border-0">
-                  <span className="mono block text-[9px] text-muted">{k}</span>
+                  <span className="label block text-[9px] text-muted">{k}</span>
                   <span className="block text-[13px] font-medium leading-snug">{v}</span>
                 </span>
               ))}
@@ -82,7 +77,7 @@ export default function IdCard({ variant }: { variant: Variant }) {
           </span>
         </span>
       </button>
-      <p className="mono mt-4 text-center text-[11px] text-muted md:text-left">
+      <p className="label mt-4 text-center text-[11px] text-muted md:text-left">
         <span className="hidden [@media(hover:hover)]:inline">Hover the card</span>
         <span className="[@media(hover:hover)]:hidden">Tap the card</span> for details
       </p>

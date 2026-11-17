@@ -1,64 +1,54 @@
 import fs from "node:fs";
 import path from "node:path";
-import { sectionMeta, variants, type SectionKey, type Variant, type VariantKey } from "@/content/portfolio";
+import { identity, sectionMeta, sectionOrder, type SectionKey } from "@/content/portfolio";
 import About from "./About";
-import BackToTop from "./BackToTop";
 import Contact from "./Contact";
-import DataScience from "./DataScience";
 import Education from "./Education";
 import Experience from "./Experience";
+import Feed from "./Feed";
 import Footer from "./Footer";
 import Hero from "./Hero";
-import Marquee from "./Marquee";
 import Nav from "./Nav";
-import Other from "./Other";
-import ScrollProgress from "./ScrollProgress";
-import Software from "./Software";
+import Projects from "./Projects";
+import Skills from "./Skills";
+import StatusBar from "./StatusBar";
 
-export default function PortfolioPage({ variantKey }: { variantKey: VariantKey }) {
-  const v = variants[variantKey];
-  // Hide resume links until the PDF actually exists in /public.
-  const exists = (file: string) => fs.existsSync(path.join(process.cwd(), "public", file));
-  const resume = exists(v.resumePdf) ? v.resumePdf : null;
-  // Both versions, this page's first, for the About download block.
-  const resumes = (Object.values(variants) as Variant[])
-    .sort((a, b) => Number(b.key === v.key) - Number(a.key === v.key))
-    .filter((r) => exists(r.resumePdf))
-    .map((r) => ({ href: r.resumePdf, label: r.label }));
-  const sections = v.sectionOrder.filter((s): s is Exclude<SectionKey, "hero"> => s !== "hero");
-  const num = (s: Exclude<SectionKey, "hero">) => String(sections.indexOf(s) + 1).padStart(2, "0");
+export default function PortfolioPage() {
+  // CVs are the main conversion; fail the build rather than ship a dead download link.
+  for (const { file } of identity.cvs) {
+    if (!fs.existsSync(path.join(process.cwd(), "public", file))) throw new Error(`CV not found at public${file}`);
+  }
+  const cv = identity.cv;
 
-  const render = (s: Exclude<SectionKey, "hero">) => {
-    const props = { id: sectionMeta[s].id, number: num(s) };
+  const render = (s: SectionKey) => {
+    const id = sectionMeta[s].id;
     switch (s) {
-      case "about":
-        return <About key={s} {...props} variant={v} resumes={resumes} />;
-      case "software_development":
-        return <Software key={s} {...props} variant={v} />;
-      case "data_science":
-        return <DataScience key={s} {...props} variant={v} />;
+      case "projects":
+        return <Projects key={s} id={id} />;
       case "experience":
-        return <Experience key={s} {...props} title={v.experienceTitle} />;
-      case "other":
-        return <Other key={s} {...props} />;
+        return <Experience key={s} id={id} />;
+      case "skills":
+        return <Skills key={s} id={id} />;
+      case "about":
+        return <About key={s} id={id} />;
+      case "feed":
+        return <Feed key={s} id={id} />;
       case "education":
-        return <Education key={s} {...props} />;
+        return <Education key={s} id={id} />;
       case "contact":
-        return <Contact key={s} {...props} resume={resume} />;
+        return <Contact key={s} id={id} cv={cv} />;
     }
   };
 
   return (
-    <div data-variant={v.key} className="min-h-screen">
-      <ScrollProgress />
-      <Nav variant={v} resume={resume} />
+    <>
+      <Nav cv={cv} />
       <main>
-        <Hero variant={v} />
-        <Marquee />
-        {sections.map(render)}
+        <Hero cv={cv} />
+        {sectionOrder.map(render)}
       </main>
       <Footer />
-      <BackToTop />
-    </div>
+      <StatusBar />
+    </>
   );
 }

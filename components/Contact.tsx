@@ -1,98 +1,63 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { contact, identity } from "@/content/portfolio";
-import { easeOut } from "@/lib/motion";
+import CvMenu from "./CvMenu";
+import { Reveal } from "./fx/Reveal";
 import Section from "./Section";
 
-export default function Contact({ id, number, resume }: { id: string; number: string; resume: string | null }) {
+export default function Contact({ id, cv }: { id: string; cv: string }) {
   const [copied, setCopied] = useState(false);
-
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(identity.email);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      setTimeout(() => setCopied(false), 2000);
     } catch {
       window.location.href = contact.primary_cta.href;
     }
   };
 
   return (
-    <Section id={id} number={number} label="Contact" title={<>Let&apos;s build <span className="accent-serif">something.</span></>}>
-      <p className="-mt-4 max-w-2xl text-xl">{contact.text}</p>
-
-      <div className="mt-10 flex flex-wrap items-center gap-4">
-        <a href={contact.primary_cta.href} className="display text-[clamp(1.75rem,5vw,3.25rem)] ulink">
-          {identity.email}
-        </a>
-        <div className="relative">
-          <button type="button" onClick={copy} className="btn btn-outline h-11 w-11 justify-center p-0" aria-label="Copy email address">
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.span
-                key={copied ? "check" : "copy"}
-                initial={{ opacity: 0, scale: 0.6 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.6 }}
-                transition={{ duration: 0.15, ease: easeOut }}
-                aria-hidden="true"
-              >
-                {copied ? <CheckIcon /> : <CopyIcon />}
-              </motion.span>
-            </AnimatePresence>
-          </button>
-          <AnimatePresence>
-            {copied && (
-              <motion.span
-                role="status"
-                initial={{ opacity: 0, y: 0 }}
-                animate={{ opacity: 1, y: -8 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2, ease: easeOut }}
-                className="mono absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-ink px-2 py-1 text-[10px] text-paper"
-              >
-                Copied
-              </motion.span>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
-
-      <ul className="mt-10 flex flex-wrap gap-3">
-        <li>
-          <a href={identity.links.linkedin} target="_blank" rel="noreferrer" className="btn btn-outline">
-            LinkedIn <span aria-hidden="true">↗</span>
-          </a>
-        </li>
-        <li>
-          <a href={identity.links.github} target="_blank" rel="noreferrer" className="btn btn-outline">
-            GitHub <span aria-hidden="true">↗</span>
-          </a>
-        </li>
-        {resume && (
-          <li>
-            <a href={resume} download className="btn">
-              Download resume <span aria-hidden="true">↓</span>
+    <Section id={id} title={contact.headline} file="hire.http">
+      <Reveal className="grid grid-cols-[minmax(0,1fr)] gap-4 rounded-[28px] bg-ink p-6 text-white sm:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-10">
+        <div>
+          <p className="text-[20px] leading-snug text-[#d8dde3]">{contact.text}</p>
+          <p className="mt-8">
+            <a href={contact.primary_cta.href} className="heading break-words text-[clamp(1.5rem,3.4vw,2.6rem)] underline decoration-2 underline-offset-[6px] hover:text-[#9fd3b5]">
+              {identity.email}
             </a>
-          </li>
-        )}
-      </ul>
-      <p className="mono mt-8 text-muted">
-        {identity.location} · {identity.phone} · Stamp 1G
-      </p>
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <button type="button" onClick={copy} className="rounded-full border border-white/40 px-4 py-2 text-[14px] font-semibold hover:bg-white hover:text-ink">
+              {copied ? "Copied" : "Copy address"}
+            </button>
+            <CvMenu className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[14px] font-semibold text-ink hover:bg-[#9fd3b5]" />
+            <a href={identity.links.linkedin} target="_blank" rel="noreferrer" className="rounded-full border border-white/40 px-4 py-2 text-[14px] font-semibold hover:bg-white hover:text-ink">
+              LinkedIn
+            </a>
+            <a href={identity.links.github} target="_blank" rel="noreferrer" className="rounded-full border border-white/40 px-4 py-2 text-[14px] font-semibold hover:bg-white hover:text-ink">
+              GitHub
+            </a>
+          </div>
+          <span role="status" className="sr-only">
+            {copied ? "Email address copied" : ""}
+          </span>
+        </div>
+        <pre className="code rounded-2xl bg-white/[0.06] p-5 text-[13px] text-[#d8dde3]" aria-hidden="true">
+          <span className="text-[#cc7832]">POST</span> /api/hire HTTP/1.1{"\n"}
+          Host: arjjunck.vercel.app{"\n"}
+          Content-Type: application/json{"\n\n"}
+          {"{\n"}
+          {"  "}<span className="text-[#9876aa]">&quot;role&quot;</span>: <span className="text-[#a5d6a7]">&quot;Software Engineer, C# / .NET&quot;</span>,{"\n"}
+          {"  "}<span className="text-[#9876aa]">&quot;location&quot;</span>: <span className="text-[#a5d6a7]">&quot;Anywhere in Ireland&quot;</span>,{"\n"}
+          {"  "}<span className="text-[#9876aa]">&quot;permit&quot;</span>: <span className="text-[#a5d6a7]">&quot;Stamp 1G, Critical Skills eligible&quot;</span>
+          {"\n}\n\n"}
+          <span className="text-[#6a8759]">HTTP/1.1 200 OK</span>
+          {"\n"}
+          <span className="text-[#7f848e]">{`# or email ${identity.email} directly`}</span>
+        </pre>
+      </Reveal>
     </Section>
   );
 }
-
-const CopyIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-    <rect x="8" y="8" width="12" height="12" />
-    <path d="M16 8V4H4v12h4" />
-  </svg>
-);
-const CheckIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M5 12l5 5 9-10" />
-  </svg>
-);

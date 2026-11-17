@@ -1,5 +1,5 @@
 {
-  "$schema_note": "Build brief for an AI coding agent. Read 'build' first, then 'design' and 'motion', then render 'content' exactly as written. Do not invent metrics, employers, or links. Design: retro-modern paper style with extra-bold modern sans for emphasis.",
+  "$schema_note": "Build brief for an AI coding agent. Read 'build' first, then 'design' and 'motion', then render 'content' exactly as written. Positioning comes from docs/portfolio-brief.md (16 Nov 2026): C# / .NET and backend roles in Ireland first, data and ML second. Do not invent metrics, employers, skills or links.",
   "build": {
     "framework": "Next.js (App Router) + TypeScript",
     "styling": "Tailwind CSS (design tokens as CSS variables in globals.css, mapped in tailwind config)",
@@ -7,29 +7,28 @@
     "fonts": "next/font/google",
     "content_source": "Copy 'content' from this file into /content/portfolio.ts as typed constants; components read from there, never hard-code copy.",
     "pages": [
-      "/",
-      "/data-science"
+      "/"
     ],
     "section_order": [
       "hero",
-      "about",
-      "software_development",
-      "data_science",
+      "projects",
       "experience",
-      "other",
+      "skills",
+      "about",
+      "feed",
       "education",
       "contact"
     ],
     "nav": {
-      "type": "sticky top bar, translucent paper background with backdrop blur after 24px scroll",
+      "type": "sticky top bar with a one-line availability banner above it",
       "links": [
-        "Software",
-        "Data Science",
+        "Projects",
         "Experience",
-        "Other",
+        "Skills",
+        "About",
         "Contact"
       ],
-      "right_side": "Resume download button (PDF in /public/resume.pdf)"
+      "right_side": "Download CV button"
     },
     "requirements": [
       "Fully responsive; 16px side gutter on mobile, max content width 1120px",
@@ -38,19 +37,15 @@
       "Semantic HTML, visible focus rings, alt text, aria-labels on icon links",
       "Respect prefers-reduced-motion everywhere",
       "Copy assets/arjun-portrait.webp to /public; render with next/image, priority, sizes set",
-      "Data science content is academic and personal only; never present it as professional ML experience",
-      "Toggle and outline buttons must show readable ink text in their resting state, not only on hover (set explicit color/background; never rely on inherited button styles)"
+      "Toggle and outline buttons must show readable ink text in their resting state, not only on hover (set explicit color/background; never rely on inherited button styles)",
+      "CVs per target role live in /public/resumes and are listed in identity.cvs; the build fails if any file is missing.",
+      "Do not list C++, ROS, OpenCV or PyTorch under skills until a shipped project on the site uses them as a core skill.",
+      "Every keyword in docs/portfolio-brief.md section 6 appears in real sentences, never in a hidden block."
     ],
-    "variant_system": {
-      "how": "One shared layout and component set. Each route loads a variant object from 'variants' and merges it over 'content'. Only copy, ordering, emphasis and featured projects change; design and motion stay identical.",
-      "switcher": "Small mono-text toggle in the nav: FULL STACK / DATA SCIENCE. Shared layoutId underline slides between them.",
-      "seo": "Each route has its own <title>, meta description and Open Graph text from the variant.",
-      "resume_files": "Put the two PDFs in /public/resumes/ with the filenames given in each variant."
+    "redirects": {
+      "/data-science": "/"
     },
-    "hero_layout": {
-      "desktop": "Two columns: text left (eyebrow, extra-bold name, italic accent word, tagline, CTAs, stats), portrait right at ~40% width, top-aligned with the name. Mono caption under the photo: 'CORK, IE · OPEN TO WORK'.",
-      "mobile": "Portrait stacks above the name at 70% width, left-aligned."
-    }
+    "cv_source": "Documents/Job Hunt/master cv/Arjun_Krishna_CV_DotNet_FullStack_Developer.pdf (tier 1 roles); master CV set dated Nov 2026"
   },
   "design": {
     "direction": "Minimal retro-modern. Warm paper background, ink-black text, one punchy accent. Like a 70s technical manual reprinted today: generous whitespace, thin rules, monospace labels. Extra-bold modern sans gives it punch in key places.",
@@ -184,23 +179,17 @@
     "identity": {
       "name": "Arjun Krishna Krishnakumar",
       "display_name": "Arjun Krishna",
-      "title": "Full Stack Developer",
-      "subtitle": "Angular · React · .NET · SQL Server · PostgreSQL",
-      "target_roles": [
-        "Full Stack Developer",
-        ".NET Developer",
-        "Angular / React Developer",
-        "Software Engineer (backend-leaning full stack)"
-      ],
+      "title": "Software Engineer",
+      "subtitle": "C# / .NET · Angular · PostgreSQL · Python",
       "location": "Cork, Ireland",
-      "work_authorization": "Irish Stamp 1G (Graduate Permission), eligible for full-time employment",
-      "availability": "Open to full-time roles",
+      "work_authorization": "Stamp 1G, eligible for Critical Skills Employment Permit",
+      "availability": "Open to permanent software roles in Ireland. Eligible for Critical Skills Employment Permit",
       "email": "arjjunck@gmail.com",
-      "phone": "+353 892671026",
       "links": {
         "linkedin": "https://linkedin.com/in/arjjunck",
         "github": "https://github.com/arjjunck"
       },
+      "cv": "/resumes/arjun-krishna-cv-dotnet-fullstack.pdf",
       "photo": {
         "hero": {
           "src": "/arjun-portrait.webp",
@@ -232,587 +221,555 @@
           "source_file": "assets/arjun-id.webp",
           "alt": "Arjun Krishna, black and white ID photo",
           "use": "Front of the flipping ID card in the About section. Shown in black and white, whole face visible."
+        },
+        "graduation": {
+          "src": "/feed/graduation-certificate.jpg",
+          "alt": "Arjun Krishna at MTU graduation holding his Master of Science in Data Science and Analytics certificate"
         }
-      }
-    },
-    "hero": {
-      "headline": "Full-stack developer building web apps for healthcare and logistics.",
-      "tagline": "Full stack developer working across Angular, React, ASP.NET Core and PostgreSQL, with an MSc in Data Science.",
-      "ctas": [
+      },
+      "location_detail": "Cork, Ireland. Open to Dublin, Limerick and hybrid",
+      "cvs": [
         {
-          "label": "See my work",
-          "href": "#software"
+          "label": ".NET / Full Stack Developer",
+          "file": "/resumes/arjun-krishna-cv-dotnet-fullstack.pdf"
         },
         {
-          "label": "Get in touch",
-          "href": "#contact"
+          "label": "AI Software Engineer",
+          "file": "/resumes/arjun-krishna-cv-ai-software-engineer.pdf"
+        },
+        {
+          "label": "Data Engineer",
+          "file": "/resumes/arjun-krishna-cv-data-engineer.pdf"
+        },
+        {
+          "label": "Mechanical Engineer (Data)",
+          "file": "/resumes/arjun-krishna-cv-mechanical-engineer-data.pdf"
+        },
+        {
+          "label": "General (all roles)",
+          "file": "/resumes/arjun-krishna-cv-general.pdf"
         }
-      ],
+      ]
+    },
+    "hero": {
+      "eyebrow": "SOFTWARE ENGINEER · CORK, IRELAND",
+      "stack_line": "C# / .NET · Angular · PostgreSQL · Python",
+      "location_line": "Cork, Ireland. Eligible for Critical Skills Employment Permit",
+      "subline": "Three years building backend systems in regulated healthcare and logistics. MSc in Data Science. Currently open to roles in Ireland.",
       "stats": [
         {
           "value": "3+",
-          "label": "years in production"
+          "label": "years commercial experience"
         },
         {
-          "value": "150+",
-          "label": "hospitals served"
+          "value": "200+",
+          "label": "hospital sites on my clinical systems"
         },
         {
-          "value": "10x",
-          "label": "faster scheduling queries"
-        }
-      ]
-    },
-    "about": "I'm a full stack developer with three years of experience building web applications that people use every day. My work has mostly been in healthcare and logistics, across Angular and React front ends, .NET back ends and SQL databases. I enjoy the whole journey of a feature, from the data model to the screen, and I'm happiest when I'm digging into a hard problem until it's properly fixed. I also have an MSc in Data Science.",
-    "skills": {
-      "software_development": {
-        "Frontend": [
-          "Angular",
-          "React",
-          "TypeScript",
-          "JavaScript",
-          "RxJS",
-          "HTML5",
-          "CSS3",
-          "Tailwind CSS"
-        ],
-        "Backend": [
-          "C#",
-          "ASP.NET Core",
-          "ASP.NET MVC",
-          "Entity Framework Core",
-          "REST APIs",
-          "Microservices",
-          "Node.js",
-          "Express.js",
-          "FastAPI"
-        ],
-        "Databases": [
-          "SQL Server",
-          "PostgreSQL",
-          "MySQL",
-          "MongoDB"
-        ],
-        "Testing & Practices": [
-          "TDD",
-          "Unit Testing",
-          "Jasmine",
-          "Karma",
-          "SOLID",
-          "Clean Code",
-          "Code Review"
-        ],
-        "DevOps & Tools": [
-          "Docker",
-          "GitHub Actions",
-          "Azure DevOps",
-          "CI/CD",
-          "Git",
-          "Jira",
-          "Agile/Scrum"
-        ]
-      },
-      "data_science": {
-        "Machine Learning": [
-          "Python",
-          "scikit-learn",
-          "XGBoost",
-          "Random Forest",
-          "LSTM / Bi-LSTM",
-          "Autoencoders",
-          "PCA",
-          "SMOTE"
-        ],
-        "Methods": [
-          "Anomaly detection",
-          "Time-series forecasting",
-          "Statistical modelling",
-          "Feature selection"
-        ],
-        "NLP & AI": [
-          "TF-IDF",
-          "Text classification",
-          "LLM API integration",
-          "Document understanding",
-          "MCP servers"
-        ],
-        "Data Tools": [
-          "pandas",
-          "NumPy",
-          "Jupyter",
-          "Power BI",
-          "ETL pipelines"
-        ]
-      }
-    },
-    "projects": {
-      "software_development": [
-        {
-          "id": "medical-claims-ai",
-          "title": "MediClaim AI",
-          "type": "Main project · personal",
-          "featured": true,
-          "summary": "AI medical document assistant and claim risk platform: ask questions about insurance policies and get answers grounded in the document, with page citations.",
-          "highlights": [
-            "RAG pipeline: PDFs are extracted page by page, split into overlapping chunks tagged with their pages, embedded with NVIDIA Nemotron and stored in PostgreSQL",
-            "Questions are answered from the most similar chunks only (cosine similarity), with page-level source citations and stored chat history",
-            "CSV claim upload with a rule-based risk engine that flags high, medium and low risk claims, plus dashboards for documents and claims",
-            "React + TypeScript front end and ASP.NET Core (.NET 10) API with JWT auth, containerised with Docker and deployed on Azure Container Apps behind an nginx proxy"
-          ],
-          "stack": [
-            "React",
-            "TypeScript",
-            "ASP.NET Core",
-            "PostgreSQL",
-            "NVIDIA NIM",
-            "Docker",
-            "Azure"
-          ],
-          "links": {
-            "github": "https://github.com/arjjunck/med-claim-ai",
-            "live": "https://mediclaim-web.thankfulflower-e7d8ef35.switzerlandnorth.azurecontainerapps.io"
-          }
-        },
-        {
-          "id": "mcp-analytics-server",
-          "title": "MCP Server for Analytics Tooling",
-          "type": "Personal project",
-          "featured": false,
-          "summary": "A Model Context Protocol server that lets AI coding agents query live analytics data.",
-          "highlights": [
-            "Exposes internal data endpoints to Cursor so agent sessions can query results and generate dashboard code from live data"
-          ],
-          "stack": [
-            "Python",
-            "FastAPI",
-            "MCP",
-            "Cursor"
-          ],
-          "links": {
-            "github": "https://github.com/arjjunck/analytics-mcp-server",
-            "live": null
-          }
+          "value": "20",
+          "label": "person Agile team, twice-weekly releases"
         }
       ],
-      "data_science": [
-        {
-          "id": "uav-battery-prediction",
-          "title": "UAV Battery Power Prediction",
-          "type": "MSc research thesis",
-          "featured": true,
-          "summary": "End-to-end ML pipeline predicting short-term drone energy use from real PX4 flight telemetry.",
-          "highlights": [
-            "Processed large-scale battery, voltage and power time series with correlation and mutual-information feature selection",
-            "Benchmarked PCA, Random Forest, XGBoost, LSTM, Bi-LSTM and Autoencoder models, and identified the best approach for anomaly scoring on flight sequences"
-          ],
-          "stack": [
-            "Python",
-            "scikit-learn",
-            "XGBoost",
-            "LSTM",
-            "PCA"
-          ],
-          "links": {
-            "github": "https://github.com/arjjunck/uav-thesis",
-            "paper": null
-          }
-        },
-        {
-          "id": "pill-defect-detection",
-          "title": "Pill Defect Detection",
-          "type": "Computer vision project",
-          "featured": true,
-          "summary": "AI quality inspection for pharmaceutical pills using an autoencoder trained on the MVTec AD dataset.",
-          "highlights": [
-            "PyTorch autoencoder flags defects by reconstruction error",
-            "Gradio interface with SQLite logging of inspections"
-          ],
-          "stack": [
-            "Python",
-            "PyTorch",
-            "Gradio",
-            "SQLite"
-          ],
-          "links": {
-            "github": "https://github.com/arjjunck/defect-detection-pill"
-          }
-        },
-        {
-          "id": "chest-xray-anomaly",
-          "title": "Chest X-ray Anomaly Detection",
-          "type": "Deep learning project",
-          "featured": false,
-          "summary": "Convolutional autoencoder for pneumonia anomaly detection, compared against a PCA reconstruction-error baseline.",
-          "highlights": [
-            "Kaggle pneumonia dataset",
-            "CNN autoencoder vs PCA baseline"
-          ],
-          "stack": [
-            "Python",
-            "Autoencoder",
-            "PCA"
-          ],
-          "links": {
-            "github": "https://github.com/arjjunck/chest-xray-anomaly-detection-autoencoder"
-          }
-        },
-        {
-          "id": "semiconductor-fault-detection",
-          "title": "Semiconductor Fault Detection",
-          "type": "ML project",
-          "featured": false,
-          "summary": "Fault classification on the highly imbalanced SECOM manufacturing dataset.",
-          "highlights": [
-            "PCA for dimensionality reduction and SMOTE for class imbalance",
-            "Benchmarked k-NN, Decision Tree and SVM classifiers"
-          ],
-          "stack": [
-            "Python",
-            "scikit-learn",
-            "SMOTE",
-            "PCA"
-          ],
-          "links": {
-            "github": "https://github.com/arjjunck/secom-semiconductor-fault-detection"
-          }
-        },
-        {
-          "id": "sarcasm-detection",
-          "title": "Sarcasm Detection",
-          "type": "NLP project",
-          "featured": false,
-          "summary": "Naive Bayes text classifier with TF-IDF features for detecting sarcasm in written text.",
-          "highlights": [
-            "End-to-end NLP workflow from preprocessing to evaluation"
-          ],
-          "stack": [
-            "Python",
-            "TF-IDF",
-            "Naive Bayes"
-          ],
-          "links": {
-            "github": "https://github.com/arjjunck/sarcasm-detection-naive-bayes"
-          }
-        },
-        {
-          "id": "pharmacy-bi-dashboard",
-          "title": "Pharmacy Sales BI Dashboard",
-          "type": "Analytics project",
-          "featured": false,
-          "summary": "Sales analytics on pharmacy transaction data: revenue trends, branch KPIs, GIS mapping and Sankey flows.",
-          "highlights": [
-            "Python data prep feeding Tableau dashboards"
-          ],
-          "stack": [
-            "Python",
-            "Tableau",
-            "pandas"
-          ],
-          "links": {
-            "github": "https://github.com/arjjunck/pharmacy-bi-dashboard-python-tableau"
-          }
-        },
-        {
-          "id": "tweet-sentiment-nb",
-          "title": "Tweet Sentiment Classifier",
-          "type": "NLP project",
-          "featured": false,
-          "summary": "Multinomial Naive Bayes written from scratch with Laplace smoothing.",
-          "highlights": [],
-          "stack": [
-            "Python",
-            "NLP"
-          ],
-          "links": {
-            "github": "https://github.com/arjjunck/Naive-Bayes-Tweet-Sentiment-Classifier"
-          }
-        },
-        {
-          "id": "pca-sensor-analyses",
-          "title": "Sensor Data PCA Studies",
-          "type": "Group of analyses",
-          "featured": false,
-          "summary": "Dimensionality reduction and clustering on three sensor datasets: human activity (smartphone), daily and sports activity (wearables), and gas sensor drift.",
-          "highlights": [
-            "PCA, LDA, K-Means and DBSCAN across real sensor data"
-          ],
-          "stack": [
-            "Python",
-            "scikit-learn",
-            "PCA",
-            "LDA",
-            "K-Means"
-          ],
-          "links": {
-            "github": [
-              "https://github.com/arjjunck/Human-Activity-Recognition-with-Smartphones",
-              "https://github.com/arjjunck/daily-sports-activity-pca-analysis",
-              "https://github.com/arjjunck/gas-sensor-drift-pca-analysis",
-              "https://github.com/arjjunck/manual-dbscan-clustering-analysis"
-            ]
-          }
-        }
+      "dimension": "Software engineer: C#, .NET, Angular, PostgreSQL, Python",
+      "stack_rows": [
+        [
+          "C#",
+          "ASP.NET Core",
+          ".NET"
+        ],
+        [
+          "TypeScript",
+          "Angular",
+          "React"
+        ],
+        [
+          "PostgreSQL",
+          "MS SQL",
+          "MongoDB"
+        ],
+        [
+          "Docker",
+          "Azure",
+          "Python"
+        ],
+        [
+          "FastAPI",
+          "LLM / RAG"
+        ],
+        [
+          "GitHub Actions"
+        ]
       ]
     },
+    "about": "I trained as a mechanical engineer and moved into software, so I still think about systems in terms of inputs, tolerances and failure modes. For two years I built clinical data applications used across 200+ hospital sites, in a regulated environment where validation, audit trails and data integrity were requirements, not extras. I then finished an MSc in Data Science and Analytics at MTU with First Class Honours, and I want to keep building data-heavy backend systems, with a longer-term interest in computer vision. I'm based in Cork and open to permanent roles anywhere in Ireland.",
+    "skills": [
+      {
+        "group": "Backend",
+        "items": [
+          "C#",
+          "ASP.NET Core",
+          ".NET",
+          "REST APIs",
+          "Object-oriented design",
+          "Third-party API integration"
+        ]
+      },
+      {
+        "group": "Frontend",
+        "items": [
+          "Angular",
+          "TypeScript",
+          "HTML",
+          "CSS",
+          "React (projects)"
+        ]
+      },
+      {
+        "group": "Databases",
+        "items": [
+          "PostgreSQL",
+          "MS SQL",
+          "MongoDB"
+        ]
+      },
+      {
+        "group": "Cloud & delivery",
+        "items": [
+          "Docker",
+          "Azure Container Apps",
+          "GitHub Actions",
+          "CI/CD",
+          "Git",
+          "Unit and integration testing",
+          "Code review",
+          "Agile"
+        ]
+      },
+      {
+        "group": "Regulated environments",
+        "items": [
+          "Validation",
+          "Audit trails",
+          "Data integrity",
+          "Requirements traceability",
+          "Root cause analysis"
+        ]
+      },
+      {
+        "group": "Python & AI",
+        "items": [
+          "Python",
+          "FastAPI",
+          "RAG and LLM integration",
+          "scikit-learn",
+          "Keras / TensorFlow",
+          "XGBoost",
+          "Anomaly detection"
+        ]
+      },
+      {
+        "group": "Engineering",
+        "items": [
+          "Creo Parametric",
+          "Ansys FEA",
+          "Design of experiments",
+          "Taguchi methods"
+        ]
+      },
+      {
+        "group": "Developer tools",
+        "items": [
+          "Claude Code",
+          "GitHub Copilot",
+          "Cursor"
+        ]
+      }
+    ],
+    "projects": [
+      {
+        "id": "medical-claims-ai",
+        "title": "Medical Claims AI Platform",
+        "type": "Flagship · live · built alone",
+        "featured": true,
+        "summary": "A full-stack web app for reviewing insurance documents and claims, with an AI layer on top.",
+        "what": "Upload insurance policy documents, ask questions answered from the document with page-level citations, and analyse claim files for risk through a retrieval-augmented generation (RAG) workflow.",
+        "highlights": [
+          "End-to-end ownership: PostgreSQL schema, ASP.NET Core REST API with JWT auth, React and TypeScript front end",
+          "RAG pipeline: PDFs split into page-tagged chunks, embedded and stored in PostgreSQL; answers use only the closest chunks and cite their pages",
+          "Rule-based risk engine flags high, medium and low risk claims from uploaded CSV files, with dashboards for documents and claims",
+          "Containerised with Docker and deployed on Azure Container Apps"
+        ],
+        "stack": [
+          "C#",
+          "ASP.NET Core",
+          "React",
+          "TypeScript",
+          "PostgreSQL",
+          "Docker",
+          "Azure Container Apps",
+          "LLM APIs"
+        ],
+        "image": {
+          "src": "/projects/mediclaim.jpg",
+          "alt": "Screenshot of the Medical Claims AI landing page with the claim review workflow"
+        },
+        "links": {
+          "live": "https://mediclaim-web.thankfulflower-e7d8ef35.switzerlandnorth.azurecontainerapps.io",
+          "github": "https://github.com/arjjunck/med-claim-ai"
+        }
+      },
+      {
+        "id": "uav-battery-anomaly",
+        "title": "UAV Battery Anomaly Detection",
+        "type": "MSc thesis",
+        "featured": false,
+        "summary": "Anomaly-aware energy prediction for drones, built on 162 real PX4 flight logs (922,895 rows of battery telemetry).",
+        "what": "Autoencoders trained on normal flights score abnormal behaviour by reconstruction error, with the alert threshold set from the training score distribution. The anomaly score is then fed into LSTM and XGBoost energy models.",
+        "highlights": [
+          "Transformer autoencoder was the best anomaly detector: AUROC 0.767, AUPRC 0.652",
+          "LSTM was the best energy predictor: MAE 0.520 Wh, R² 0.848 across 5 grouped folds"
+        ],
+        "stack": [
+          "Python",
+          "LSTM",
+          "Autoencoders",
+          "XGBoost"
+        ],
+        "links": {
+          "github": "https://github.com/arjjunck/uav-thesis"
+        }
+      },
+      {
+        "id": "semiconductor-fault-detection",
+        "title": "Semiconductor Manufacturing Fault Detection",
+        "type": "MSc",
+        "featured": false,
+        "summary": "Detecting rare fault events in heavily imbalanced manufacturing sensor data (SECOM dataset).",
+        "what": "Classification pipeline using PCA for dimensionality reduction and SMOTE for class imbalance, with k-NN, Decision Tree and SVM compared on precision and recall rather than accuracy.",
+        "highlights": [],
+        "stack": [
+          "Python",
+          "PCA",
+          "SMOTE",
+          "k-NN",
+          "Decision Tree",
+          "SVM"
+        ],
+        "links": {
+          "github": "https://github.com/arjjunck/secom-semiconductor-fault-detection"
+        }
+      },
+      {
+        "id": "mr-damper",
+        "title": "Geometrical Optimisation of an MR Damper",
+        "type": "BTech · team of 4",
+        "featured": false,
+        "summary": "Magnetorheological damper geometry optimised with FEM and design of experiments.",
+        "what": "2D axisymmetric magnetostatic FEM model; geometry optimised with response surface methodology and a Taguchi design of experiments. The selected design gave 498.5 N damping force at 1 A, and flux return thickness above about 8.8 mm brought no further gain.",
+        "highlights": [],
+        "stack": [
+          "Creo Parametric",
+          "Ansys",
+          "Minitab"
+        ],
+        "links": {},
+        "figure": {
+          "value": "498.5 N",
+          "label": "damping force at 1 A, selected design"
+        }
+      }
+    ],
     "experience": [
       {
         "role": "Full Stack Developer",
         "company": "Cydez Technologies",
-        "location": "India · Hybrid",
+        "location": "India",
         "start": "2025-01",
         "end": "2025-07",
         "domain": "Logistics",
         "highlights": [
-          "Built REST APIs for shipment creation, status tracking and warehouse inventory in ASP.NET Core and EF Core, within a microservices platform serving Maersk and other global shipping clients",
-          "Refactored LINQ and EF Core queries across delivery, warehouse and shipment modules to cut data-access latency on core reads",
-          "Shipped Angular features against backend microservices and reviewed code for junior developers in a 20-person Scrum team",
-          "Automated builds and deployments with GitHub Actions and Docker, and contributed to Azure DevOps pipeline configuration"
+          "Built full-stack features for an enterprise logistics platform serving a global shipping customer, in C#, ASP.NET Core and TypeScript, with Angular front ends and PostgreSQL storage",
+          "Integrated third-party APIs into the shipment tracking and delivery modules",
+          "Set up and maintained CI/CD pipelines with GitHub Actions and Docker supporting twice-weekly releases for a 20-person Agile team; wrote unit testing and integration testing suites and did code review for teammates",
+          "Ran root cause analysis on production incidents, tracing them through application logs, fixing them and documenting the fix"
         ],
         "stack": [
-          "ASP.NET Core",
           "C#",
-          "EF Core",
+          "ASP.NET Core",
+          "TypeScript",
           "Angular",
-          "SQL Server",
+          "PostgreSQL",
           "Docker",
-          "GitHub Actions",
-          "Azure DevOps"
+          "GitHub Actions"
         ]
       },
       {
         "role": "Software Engineer",
         "company": "Kameda Infologics",
-        "location": "India · Hybrid",
+        "location": "India",
         "start": "2022-10",
         "end": "2024-09",
-        "domain": "Healthcare",
+        "domain": "Regulated healthcare",
         "highlights": [
-          "Developed ASP.NET Core microservices for patient management, scheduling and records on a platform used daily by 150+ hospitals across India and the Middle East",
-          "Optimised PostgreSQL queries in the scheduling module, cutting booking and rescheduling times from over 10 seconds to under 1 second at peak",
-          "Built front-end features in Angular, React and TypeScript, and analytics dashboards for clinical and admin teams",
-          "Wrote unit tests with Jasmine and Karma; grew from junior developer to mentoring new hires and running code reviews"
+          "Built and maintained backend services and REST APIs in C# and TypeScript for clinical data applications deployed across 200+ hospital sites in India and the UAE",
+          "Designed PostgreSQL schemas and queries with validation and audit trails built into the data flow, to protect data integrity in a regulated environment",
+          "Developed Angular front ends for internal clinical workflows, working with clinical and business users to turn complex data into usable screens",
+          "Investigated production data issues across a multi-site deployment, found root causes and explained them to clinical and business stakeholders"
         ],
         "stack": [
-          "ASP.NET Core",
           "C#",
-          "Angular",
-          "React",
+          ".NET Core",
           "TypeScript",
+          "Angular",
           "PostgreSQL",
-          "Jasmine",
-          "Karma"
+          "REST APIs"
         ]
       },
       {
         "role": "Software Engineer & Training Assistant",
         "company": "Luminar Technolab",
-        "location": "India · On-site",
+        "location": "India",
         "start": "2021-11",
         "end": "2022-10",
-        "domain": "Healthcare / Education",
+        "domain": "Healthcare",
         "highlights": [
-          "Led 3 of 5 production releases on a 5-person team shipping Angular and REST API features for clinical workflow clients",
-          "Taught full stack development to batches of 60 students (HTML, CSS, JavaScript, TypeScript, Angular, React, Node.js)"
+          "Delivered the Kiniqaly application end to end as part of a six-person team, building in C# with Angular front ends and MongoDB",
+          "Trained 60+ junior engineers across three cohorts in programming fundamentals, object-oriented design and testing"
         ],
         "stack": [
+          "C#",
           "Angular",
-          "REST APIs",
-          "Node.js"
+          "MongoDB"
         ]
       }
     ],
-    "other": {
-      "intro": "Things outside the day-to-day code that shaped how I work.",
-      "items": [
-        {
-          "title": "Teaching & mentoring",
-          "detail": "Trained batches of 60 students in full stack development at Luminar, and mentored incoming developers at Kameda Infologics."
-        },
-        {
-          "title": "Release leadership",
-          "detail": "Led 3 of 5 production releases for healthcare clients, coordinating testing and UI/UX."
-        },
-        {
-          "title": "Agile delivery",
-          "detail": "Sprint planning, code reviews and retrospectives across multiple Scrum teams, including a 20-person team at Cydez."
-        },
-        {
-          "title": "Engineering background",
-          "detail": "B.Tech in Mechanical Engineering, which is where the systems thinking started."
-        },
-        {
-          "title": "Data privacy",
-          "detail": "Built software under healthcare compliance requirements; familiar with GDPR."
-        },
-        {
-          "title": "Problem solving",
-          "detail": "Regular NeetCode practice, with submissions tracked on GitHub.",
-          "link": "https://github.com/arjjunck/neetcode-submissions"
-        }
-      ],
-      "certifications": [
-        {
-          "name": "Supervised Machine Learning: Regression and Classification",
-          "issuer": "Coursera / DeepLearning.AI",
-          "status": "completed"
-        },
-        {
-          "name": "MEARN Stack Web Development",
-          "issuer": "National Council for Technology and Training, India",
-          "status": "completed"
-        },
-        {
-          "name": "AWS Certified Machine Learning – Specialty",
-          "issuer": "AWS",
-          "status": "in progress, target Dec 2026"
-        }
-      ]
-    },
     "education": [
       {
         "degree": "MSc in Data Science and Analytics",
         "school": "Munster Technological University, Cork",
         "start": "2025-09",
-        "end": "2026-09",
+        "end": "2026-10",
         "result": "First Class Honours",
         "modules": [
-          "Applied Machine Learning",
-          "Time Series Analysis",
-          "Data Mining & Statistical Modelling",
-          "Multivariate Modelling",
           "Practical Data Management",
-          "Scientific Programming in Python"
+          "Data Science Principles",
+          "Statistics and Probability",
+          "Data Mining and Statistical Modelling",
+          "Multivariate Modelling",
+          "Scientific Programming in Python",
+          "Introduction to R for Data Science",
+          "Time Series Analysis",
+          "Applied Machine Learning",
+          "Data Analytics and Visualisation",
+          "Research Methods",
+          "Regression Analysis"
         ]
       },
       {
-        "degree": "B.Tech in Mechanical Engineering",
-        "school": "SCMS School of Engineering and Technology, India",
+        "degree": "BTech in Mechanical Engineering",
+        "school": "APJ Abdul Kalam Technological University, Kerala",
         "start": "2017-01",
         "end": "2021-01",
-        "result": "GPA 8.05 / 10"
+        "result": "CGPA 8.05 / 10"
       }
     ],
     "contact": {
-      "headline": "Let's build something.",
-      "text": "I'm looking for full-time full stack roles in Ireland working with Angular or React, .NET and SQL. The fastest way to reach me is email.",
+      "headline": "Get in touch",
+      "text": "I'm open to permanent software roles anywhere in Ireland, and I'm eligible for the Critical Skills Employment Permit. Email is the fastest way to reach me.",
       "primary_cta": {
         "label": "arjjunck@gmail.com",
         "href": "mailto:arjjunck@gmail.com"
+      }
+    },
+    "meta": {
+      "title": "Arjun Krishna Krishnakumar · Software Engineer (C# / .NET) · Cork, Ireland",
+      "description": "Software engineer in Cork, Ireland: C#, ASP.NET Core, Angular, TypeScript, PostgreSQL and Python. 3+ years building backend systems in regulated healthcare and logistics. Eligible for Critical Skills Employment Permit."
+    },
+    "certifications": [
+      {
+        "name": "Supervised Machine Learning: Regression and Classification",
+        "issuer": "DeepLearning.AI / Coursera",
+        "status": "completed"
       },
-      "secondary": [
-        "linkedin",
-        "github",
-        "resume.pdf"
-      ]
-    }
+      {
+        "name": "Manufacturing Automation",
+        "issuer": "NPTEL",
+        "status": "completed"
+      },
+      {
+        "name": "Microsoft Certified: Azure AI Cloud Developer Associate (AI-200)",
+        "issuer": "Microsoft",
+        "status": "in progress"
+      }
+    ],
+    "interest": "Next: camera calibration and multi-camera perception projects, added here with measured results once they are built.",
+    "marquee": [
+      "C#",
+      "ASP.NET Core",
+      ".NET",
+      "Angular",
+      "TypeScript",
+      "React",
+      "PostgreSQL",
+      "MS SQL",
+      "MongoDB",
+      "REST APIs",
+      "Docker",
+      "Azure Container Apps",
+      "GitHub Actions",
+      "Python",
+      "FastAPI"
+    ],
+    "more_projects": [
+      {
+        "group": "Backend & data engineering",
+        "items": [
+          {
+            "id": "analytics-mcp-server",
+            "title": "Analytics MCP Server",
+            "type": "Personal project",
+            "summary": "Model Context Protocol server that lets AI coding tools (Cursor, Windsurf, Zed) query live analytics data and generate dashboard code from it.",
+            "detail": "Five MCP tools over stdio, backed by PostgreSQL raw and analytics schemas, dbt incremental models, a nightly Airflow DAG and Kafka event ingestion.",
+            "stack": [
+              "Python",
+              "PostgreSQL",
+              "asyncpg",
+              "dbt",
+              "Apache Airflow",
+              "Apache Kafka",
+              "MCP"
+            ],
+            "links": {
+              "github": "https://github.com/arjjunck/analytics-mcp-server"
+            }
+          },
+          {
+            "id": "pharmacy-bi-dashboard",
+            "title": "Pharmacy Sales BI Dashboard",
+            "type": "Personal project",
+            "summary": "End-to-end sales analytics on pharmacy transaction data, from data quality checks to interactive dashboards.",
+            "detail": "Python data preparation and revenue verification feeding Tableau dashboards for branch KPIs, product profitability, customer demographics, GIS mapping and Sankey payment flows.",
+            "stack": [
+              "Python",
+              "pandas",
+              "Tableau"
+            ],
+            "links": {
+              "github": "https://github.com/arjjunck/pharmacy-bi-dashboard-python-tableau"
+            }
+          }
+        ]
+      },
+      {
+        "group": "Machine learning & computer vision",
+        "items": [
+          {
+            "id": "pill-defect-detection",
+            "title": "Pill Defect Detection",
+            "type": "Personal project",
+            "summary": "Visual quality inspection for pharmaceutical pills, trained on the MVTec AD dataset.",
+            "detail": "Autoencoder flags defects by reconstruction error, evaluated with a precision-recall curve; Gradio interface with SQLite logging of each inspection.",
+            "stack": [
+              "Python",
+              "PyTorch",
+              "Autoencoders",
+              "Gradio",
+              "SQLite"
+            ],
+            "links": {
+              "github": "https://github.com/arjjunck/defect-detection-pill"
+            }
+          },
+          {
+            "id": "chest-xray-anomaly",
+            "title": "Chest X-ray Anomaly Detection",
+            "type": "Personal project",
+            "summary": "Convolutional autoencoder for pneumonia anomaly detection on the Kaggle chest X-ray dataset.",
+            "detail": "Compared against a PCA reconstruction-error baseline and evaluated with ROC-AUC and anomaly recall.",
+            "stack": [
+              "Python",
+              "Autoencoders",
+              "PCA"
+            ],
+            "links": {
+              "github": "https://github.com/arjjunck/chest-xray-anomaly-detection-autoencoder"
+            }
+          }
+        ]
+      },
+      {
+        "group": "Data science & NLP",
+        "items": [
+          {
+            "id": "pca-sensor-analyses",
+            "title": "Sensor Data PCA Studies",
+            "type": "MSc coursework",
+            "summary": "Dimensionality reduction and clustering on real sensor data: smartphone activity recognition, wearable sports activity and gas sensor drift, plus a manual DBSCAN study.",
+            "detail": "PCA, LDA, K-Means and DBSCAN with scikit-learn and NumPy.",
+            "stack": [
+              "Python",
+              "scikit-learn",
+              "PCA",
+              "LDA",
+              "K-Means"
+            ],
+            "links": {
+              "github": "https://github.com/arjjunck/Human-Activity-Recognition-with-Smartphones",
+              "more": [
+                "https://github.com/arjjunck/daily-sports-activity-pca-analysis",
+                "https://github.com/arjjunck/gas-sensor-drift-pca-analysis",
+                "https://github.com/arjjunck/manual-dbscan-clustering-analysis"
+              ]
+            }
+          },
+          {
+            "id": "sarcasm-detection",
+            "title": "Sarcasm Detection",
+            "type": "MSc coursework",
+            "summary": "Custom Naive Bayes implementations with TF-IDF and numeric meta-features for detecting sarcasm.",
+            "detail": "Text preprocessing, class imbalance handling and error analysis.",
+            "stack": [
+              "Python",
+              "TF-IDF",
+              "Naive Bayes"
+            ],
+            "links": {
+              "github": "https://github.com/arjjunck/sarcasm-detection-naive-bayes"
+            }
+          },
+          {
+            "id": "tweet-sentiment-nb",
+            "title": "Tweet Sentiment Classifier",
+            "type": "Personal project",
+            "summary": "Multinomial Naive Bayes written from scratch with Laplace smoothing.",
+            "detail": "No ML library for the model itself: counting, smoothing and scoring implemented by hand.",
+            "stack": [
+              "Python",
+              "NLP"
+            ],
+            "links": {
+              "github": "https://github.com/arjjunck/Naive-Bayes-Tweet-Sentiment-Classifier"
+            }
+          }
+        ]
+      }
+    ],
+    "feed": [
+      {
+        "src": "/feed/autumn-campus.jpg",
+        "alt": "Arjun in a black suit on an autumn campus lawn, checking his phone",
+        "caption": "Autumn in Cork"
+      },
+      {
+        "src": "/feed/graduation-gown.jpg",
+        "alt": "Arjun in graduation gown and sunglasses in front of the MTU backdrop",
+        "caption": "Graduation day, October 2026"
+      }
+    ]
   },
   "open_questions": [
-    "Export the two resume PDFs to /public/resumes/"
-  ],
-  "variants": {
-    "fullstack": {
-      "route": "/",
-      "source_resume": "Arjun_Krishna_Resume_DotNet.docx + Arjun_Krishna_Resume_Updated.docx",
-      "resume_pdf": "/resumes/arjun-krishna-fullstack.pdf",
-      "meta": {
-        "title": "Arjun Krishna, Full Stack Developer",
-        "description": "Full stack developer in Cork: Angular, React, ASP.NET Core, C#, SQL Server and PostgreSQL. Stamp 1G, available full-time."
-      },
-      "accent_key": "accent",
-      "hero": {
-        "eyebrow": "FULL STACK DEVELOPER · CORK",
-        "headline": "Full-stack developer building web apps for healthcare and logistics.",
-        "tagline": "Angular and React on the front, ASP.NET Core, C# and SQL Server / PostgreSQL behind it."
-      },
-      "about": "I'm a full stack developer with three years of experience building web applications that people use every day. My work has mostly been in healthcare and logistics, across Angular and React front ends, .NET back ends and SQL databases. I enjoy the whole journey of a feature, from the data model to the screen, and I'm happiest when I'm digging into a hard problem until it's properly fixed. I also have an MSc in Data Science.",
-      "section_order": [
-        "hero",
-        "about",
-        "software_development",
-        "experience",
-        "data_science",
-        "other",
-        "education",
-        "contact"
-      ],
-      "skills_order": [
-        "Frontend",
-        "Backend",
-        "Databases",
-        "Testing & Practices",
-        "DevOps & Tools"
-      ],
-      "featured_projects": [
-        "medical-claims-ai",
-        "mcp-analytics-server",
-        "pill-defect-detection"
-      ],
-      "data_science_section": "condensed: show 3 featured cards only, link 'see all' to /data-science",
-      "hero_badge": "Stamp 1G · eligible for full-time work",
-      "skills_highlight": [
-        "Angular",
-        "React",
-        "TypeScript",
-        "C#",
-        "ASP.NET Core",
-        "Entity Framework Core",
-        "SQL Server",
-        "PostgreSQL"
-      ]
-    },
-    "data_science": {
-      "route": "/data-science",
-      "source_resume": "Arjun_Krishna_Resume 1.docx",
-      "resume_pdf": "/resumes/arjun-krishna-data-science.pdf",
-      "meta": {
-        "title": "Arjun Krishna, Data Science (MSc)",
-        "description": "Software engineer with a First Class Honours MSc in Data Science. Academic and personal projects in anomaly detection, time series and NLP."
-      },
-      "accent_key": "secondary",
-      "hero": {
-        "eyebrow": "MSC DATA SCIENCE · FIRST CLASS HONOURS · CORK",
-        "headline": "A software engineer with a First Class MSc in Data Science.",
-        "tagline": "Three years building production software, plus academic and personal projects in anomaly detection, time series and NLP."
-      },
-      "about": "My professional experience is in full stack software engineering: three years building ASP.NET Core, Angular and React systems for healthcare and logistics. Alongside that I completed an MSc in Data Science and Analytics at MTU with First Class Honours. My thesis predicted drone battery use from real PX4 flight telemetry, and my main project, MediClaim AI, is a full-stack RAG platform deployed on Azure that answers questions about insurance documents with page citations and flags risky claims. I'm looking for mid to senior roles where I can bring both together, whether that's full stack engineering on a data-heavy product or a data role where production engineering experience matters.",
-      "section_order": [
-        "hero",
-        "about",
-        "data_science",
-        "education",
-        "software_development",
-        "experience",
-        "other",
-        "contact"
-      ],
-      "skills_order": [
-        "Machine Learning",
-        "Methods",
-        "NLP & AI",
-        "Data Tools"
-      ],
-      "featured_projects": [
-        "uav-battery-prediction",
-        "pill-defect-detection",
-        "chest-xray-anomaly",
-        "medical-claims-ai"
-      ],
-      "stats_override": [
-        {
-          "value": "First Class",
-          "label": "Honours, MSc Data Science"
-        },
-        {
-          "value": "10+",
-          "label": "data science projects on GitHub"
-        },
-        {
-          "value": "3+",
-          "label": "years as a software engineer"
-        }
-      ],
-      "experience_note": "Label the experience section 'Software engineering experience'. Do not describe any role as ML or data science work.",
-      "project_labels": "Tag every data science card as 'MSc thesis', 'Coursework' or 'Personal project'; never as professional work."
-    }
-  }
+    "MR Damper project has no public link yet (brief says no project without a link).",
+    "Brief listed MediClaim as Python/FastAPI/GitHub Actions; the repo is C#/ASP.NET Core + TypeScript with no workflows, so the site uses the repo stack.",
+    "Brief listed the UAV thesis as Keras; the thesis README says PyTorch. Brief listed SECOM with XGBoost; the README says k-NN, Decision Tree and SVM."
+  ]
 }

@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
 import PortfolioPage from "@/components/PortfolioPage";
-import { variants } from "@/content/portfolio";
-
-const v = variants.fullstack;
+import { meta } from "@/content/portfolio";
 
 export const metadata: Metadata = {
-  title: v.meta.title,
-  description: v.meta.description,
-  openGraph: { title: v.meta.title, description: v.meta.description, images: ["/arjun-portrait.webp"] },
+  title: meta.title,
+  description: meta.description,
+  openGraph: { title: meta.title, description: meta.description, images: ["/projects/mediclaim.jpg"] },
 };
 
 export default function Home() {
-  return <PortfolioPage variantKey="fullstack" />;
+  return <PortfolioPage />;
 }

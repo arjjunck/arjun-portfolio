@@ -10,7 +10,7 @@ import Section from "./Section";
 export default function Feed({ id }: { id: string }) {
   return (
     <Section id={id} title="Photos" file="~/Pictures/cork">
-      <RevealGroup as="ul" className="grid max-w-[600px] grid-cols-2 gap-3 sm:gap-4" stagger={0.12}>
+      <RevealGroup as="ul" className="grid max-w-[820px] grid-cols-3 gap-2 sm:gap-4" stagger={0.12}>
         {feed.map((p) => (
           <RevealItem as="li" key={p.src}>
             <Tilt className="group/photo relative aspect-[4/5] overflow-hidden rounded-[20px] bg-[#dde1e6] sm:rounded-[24px]">
@@ -20,7 +20,7 @@ export default function Feed({ id }: { id: string }) {
                     src={p.src}
                     alt={p.alt}
                     fill
-                    sizes="(min-width: 640px) 300px, 50vw"
+                    sizes="(min-width: 640px) 270px, 33vw"
                     className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/photo:scale-[1.06]"
                   />
                 </Parallax>
